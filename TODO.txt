@@ -3,3 +3,6 @@
 3. Alter hit chance formula to favour hitting when difference is small
     Perhaps make it so greater agility gives increasing returns rather than flat returns. Then set the base chance much higher.
     Add criticals?
+4. Fix up basic characters
+5. Make AI (No need for enemies to act in the same way as the player)
+6. Compress the inputs and events into a new file
