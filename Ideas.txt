@@ -1,0 +1,18 @@
+IDEAS:
+Only STR and INT based damage, no DEX damage (this is because DEX is used for attack amounts, not damage)
+Anti-defence skills for DEX users decrease enemy defence
+
+DEX and AGI are directly compared and difference is added to 50
+
+If damage is 0, characters are not launched?
+
+Weapons alter stats like in Disgaea, not damage calculation
+Cancelling maybe? Have certain 'Arts' only cancellable by certain other 'Arts'.
+
+Mid combat combo creation
+
+Arts window
+
+
+Single character for now, then expand
+Enemy no combo, then expand

@@ -1,0 +1,2 @@
+1. Make proper display function and file
+2. Fix the direction for loc to use sine and cosine instead of the mess of ifs

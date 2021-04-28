@@ -1,0 +1,14 @@
+
+function CalculateDamage(attacker, defender, modifiers, AtkType, comboLevel)
+  damage = 0
+  if AtkType is Physical
+    damage = attacker.ATK * modifiers.ATK - defender.DEF * modifiers.DEF
+  else
+    damage = attacker.MAG * modifiers.MAG - defender.RES * modifiers.RES
+
+  missChance = 50% + attacker.DEX - defender.AGI
+  if random() < missChance
+    damage = 0
+
+  damage = damage * modifiers.DMG * (1 + comboLevel/10)
+  return damage
