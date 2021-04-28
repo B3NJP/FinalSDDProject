@@ -1,2 +1,5 @@
 1. Make proper display function and file
 2. Fix the direction for loc to use sine and cosine instead of the mess of ifs
+3. Alter hit chance formula to favour hitting when difference is small
+    Perhaps make it so greater agility gives increasing returns rather than flat returns. Then set the base chance much higher.
+    Add criticals?
