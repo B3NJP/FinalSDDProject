@@ -1,6 +1,6 @@
 import math, random, sys
 import pygame
-import classes, functions, exampleArts
+import classes, functions, exampleArts, drawMap
 pygame.init()
 
 # Basic Values
@@ -110,26 +110,10 @@ while True:
                     if i.loc == location:
                         selected = i
                         break
-
+                        
     screen.fill(white) # Makes the screen white
-
-    # Draws grid
-    # for i in range(0, len(grid)):
-    #     for j in range(0, len(grid[i])):
-    #         if ((i+area[1])*100 < screenSize[1] and (i+area[1])*100 > -100): # If the spot is within the selected area
-    #             if ((j+area[0])*100 < screenSize[0] and (j+area[0])*100 > -100): # If the spot is within the selected area
-
-    # Grid lines
-    for i in range(0, len(grid)):
-        for j in range(0, len(grid[i])):
-            if ((i+camera[1])*100 < screenSize[1] and (i+camera[1])*100 > -100): # If the spot is within the selected area
-                if ((j+camera[0])*100 < screenSize[0] and (j+camera[0])*100 > -100): # If the spot is within the selected area
-                    pygame.draw.rect(screen, black, [(j+camera[0])*100, (i+camera[1])*100]+box, 1) # Draws grid lines
-
-    for i in units:
-        if ((i.loc[1]+camera[1])*100 < screenSize[1] and (i.loc[1]+camera[1])*100 > -100): # If the spot is within the selected area
-            if ((i.loc[0]+camera[0])*100 < screenSize[0] and (i.loc[0]+camera[0])*100 > -100): # If the spot is within the selected area
-                pygame.draw.circle(screen, black, [(i.loc[0]+camera[0])*100+50, (i.loc[1]+camera[1])*100+50], 40, 1) # Draws grid lines
+    
+    drawMap.draw(grid, units, camera, screen)
 
     if dispStatWind and selected:
         statWindow.fill(white)
