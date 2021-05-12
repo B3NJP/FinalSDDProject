@@ -37,6 +37,19 @@ def findDefenders(defenders, locs):
 
 def determineLoc(dir, mods):
     loc = [0,0]
+    angle = {'N': 0, 'E': math.pi/2, 'S': math.pi, 'W': math.pi*3/2}
+    if i == 'F': #Note to future self: still unfinished, need to fix the sin and cos
+        loc[0] += math.sin(angle[dir])
+        loc[1] -= math.cos(angle[dir])
+    elif i == 'B':
+        loc[0] -= math.sin(angle[dir])
+        loc[1] += math.cos(angle[dir])
+    elif i == 'R':
+        loc[0] += math.sin(angle[dir])
+        loc[1] += math.sin(angle[dir])
+    elif i == 'L':
+        loc[0] += math.sin(angle[dir])
+        loc[1] += math.sin(angle[dir])
     if dir == 'U':
         for i in mods:
             if i == 'F':

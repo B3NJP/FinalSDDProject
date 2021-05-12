@@ -47,9 +47,9 @@ units = [Alice, Bill]
 cArt = exampleArts.pierce
 
 testComboA = [exampleArts.pierce, exampleArts.greatPierce]
-testDirsA = ['U', 'U']
+testDirsA = ['N', 'N']
 testComboB = [exampleArts.broadSlash]*8
-testDirsB = ['U', 'R', 'R', 'D', 'D', 'L', 'L', 'U']
+testDirsB = ['N', 'E', 'E', 'S', 'S', 'W', 'W', 'N']
 
 while True:
     # Gets events
@@ -83,13 +83,13 @@ while True:
                 cArt = exampleArts.broadSlash
 
             if event.key == pygame.K_u:
-                functions.useArt(Alice, units, cArt, 0, 'U')
+                functions.useArt(Alice, units, cArt, 0, 'N')
             if event.key == pygame.K_h:
-                functions.useArt(Alice, units, cArt, 0, 'L')
+                functions.useArt(Alice, units, cArt, 0, 'W')
             if event.key == pygame.K_j:
-                functions.useArt(Alice, units, cArt, 0, 'D')
+                functions.useArt(Alice, units, cArt, 0, 'S')
             if event.key == pygame.K_k:
-                functions.useArt(Alice, units, cArt, 0, 'R')
+                functions.useArt(Alice, units, cArt, 0, 'E')
 
             if event.key == pygame.K_z:
                 functions.combo(Alice, units, testComboA, testDirsA)
