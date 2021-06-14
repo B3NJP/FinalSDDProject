@@ -103,6 +103,6 @@ def useArt(attacker, defenderList, art, combo, dir):
     attacker.loc[0] += mvLoc[0]
     attacker.loc[1] += mvLoc[1]
 
-def combo(attacker, defenderList, arts, dirs):
-    for i,v in enumerate(arts):
-        useArt(attacker, defenderList, v, i, dirs[i])
+# def useCombo(attacker, defenderList, arts, dirs): Removed in place of having combo in combo class
+#     for i,v in enumerate(arts):
+#         useArt(attacker, defenderList, v, i, dirs[i])

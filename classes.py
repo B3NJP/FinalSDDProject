@@ -1,3 +1,5 @@
+import functions
+
 class Map:
     def __init__(self):
         pass
@@ -23,3 +25,13 @@ class Art:
         self.mv = mv
         self.rg = rg
         self.cost = cost
+
+class Combo:
+    def __init__(self, name, arts):
+        self.name = name
+        self.arts = arts
+        self.count = len(arts)
+        
+    def run(self, attacker, defenderList, dirs):
+        for i,v in enumerate(self.arts):
+            functions.useArt(attacker, defenderList, v, i, dirs[i])

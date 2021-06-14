@@ -25,12 +25,12 @@ statWindow.set_alpha(200)
 dispStatWind = False
 
 
-# Arts Window
-artsWindowSize = [300, 400]
-artsWindow = pygame.Surface(statWindowSize)
+# Combo Window
+comboWindowSize = [300, 400]
+comboWindow = pygame.Surface(comboWindowSize)
 page = 0
-artsWindow.set_alpha(200)
-dispArtsWind = False
+comboWindow.set_alpha(200)
+dispComboWind = False
 
 
 # Text Font
@@ -46,10 +46,12 @@ units = [Alice, Bill]
 
 cArt = exampleArts.pierce
 
-testComboA = [exampleArts.pierce, exampleArts.greatPierce]
+testComboA = classes.Combo('Test1', [exampleArts.pierce, exampleArts.greatPierce])
 testDirsA = ['U', 'U']
-testComboB = [exampleArts.broadSlash]*8
+testComboB = classes.Combo('Test2', [exampleArts.broadSlash]*8)
 testDirsB = ['U', 'R', 'R', 'D', 'D', 'L', 'L', 'U']
+
+combos = [testComboA, testComboB]
 
 while True:
     # Gets events
@@ -92,14 +94,14 @@ while True:
                 functions.useArt(Alice, units, cArt, 0, 'R')
 
             if event.key == pygame.K_z:
-                functions.combo(Alice, units, testComboA, testDirsA)
+                testComboA.run(Alice, units, testDirsA)
             if event.key == pygame.K_x:
-                functions.combo(Alice, units, testComboB, testDirsB)
+                testComboB.run(Alice, units, testDirsB)
 
             if event.key == pygame.K_m:
                 dispStatWind = not dispStatWind
             if event.key == pygame.K_n:
-                dispArtWind = not dispArtWind
+                dispComboWind = not dispComboWind
 
         if event.type == pygame.MOUSEBUTTONDOWN: # Mouse buttons
             if event.button == 1:
@@ -122,6 +124,16 @@ while True:
         statWindow.blit(font.render('HP: ' + str(selected.HP), True, black), [10, 25])
         statWindow.blit(font.render('MP: ' + str(selected.MP), True, black), [10, 40])
         screen.blit(statWindow, [0, screenSize[1]-statWindowSize[1]])
+        
+    if dispComboWind:
+        comboWindow.fill(white)
+        pygame.draw.rect(comboWindow, black, [0, 0] + comboWindow, 10)
+        comboWindow.blit(font.render(selected.name, True, black), [10, 10])
+        for i in range(0, min(10, len(combos))):
+            pass
+        comboWindow.blit(font.render('HP: ' + str(selected.HP), True, black), [10, 25])
+        comboWindow.blit(font.render('MP: ' + str(selected.MP), True, black), [10, 40])
+        screen.blit(comboWindow, [screenSize[0]-comboWindowSize[0], screenSize[1]-comboWindowSize[1]])
 
     # Draws everything to screen
     pygame.display.flip()
