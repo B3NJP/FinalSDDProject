@@ -58,8 +58,8 @@ def drawPauseMenuButtons(cursor):
     
 # Combo Menu
 dispComboMenu = False
-comboMenuSize = [600, 600]
-comboMenuLoc = [200, 100]
+comboMenuSize = [700, 600]
+comboMenuLoc = [150, 100]
 comboMenu = pygame.Surface(comboMenuSize)
 arrowFont = pygame.font.Font(None, 60)
 def drawComboMenu(highlight):
@@ -103,6 +103,8 @@ def drawComboMenu(highlight):
         comboMenu.blit(menuFont.render(highlight.name, True, black), [(200-menuFont.size(highlight.name)[0])/2+400, (100-menuFont.size(highlight.name)[1])/2])
         for i in range(0, len(highlight.arts)):
             drawButton(comboMenu, highlight.arts[i].name, menuFont, [400, 100+i*50], [200, 50], white, black)
+            drawButton(comboMenu, highlight.dirs[i], menuFont, [600, 100+i*50], [100, 50], white, black)
+            
         
 
 # Text Font
