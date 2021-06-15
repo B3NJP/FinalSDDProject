@@ -104,8 +104,7 @@ def drawComboMenu(highlight):
         for i in range(0, len(highlight.arts)):
             drawButton(comboMenu, highlight.arts[i].name, menuFont, [400, 100+i*50], [200, 50], white, black)
             drawButton(comboMenu, highlight.dirs[i], menuFont, [600, 100+i*50], [100, 50], white, black)
-            
-        
+
 
 # Text Font
 font = pygame.font.Font(None, 25)
@@ -206,18 +205,26 @@ while True:
                 if dispPauseMenu:
                     if dispComboMenu:
                         if comboMenuLoc[0] <= event.pos[0] <= comboMenuLoc[0]+comboMenuSize[0]:
-                            if comboMenuLoc[0] <= event.pos[0] <= comboMenuLoc[0]+200 and comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
-                                if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(combos):
-                                    menuSelectedCombo = combos[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]
+                            if comboMenuLoc[0] <= event.pos[0] <= comboMenuLoc[0]+200:
+                                if comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
+                                    if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(combos):
+                                        menuSelectedCombo = combos[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]
+                                if comboMenuLoc[1]+comboMenuSize[1]-100 <= event.pos[1] <= comboMenuLoc[1]+comboMenuSize[1]:
+                                    if len(combos) < 10:
+                                        combos += [classes.Combo('Name1', [], [])]
                             if menuSelectedCombo:
                                 if comboMenuLoc[0]+200 <= event.pos[0] <= comboMenuLoc[0]+400 and comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
                                     if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(knownArts):
                                         menuSelectedCombo.arts += [knownArts[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]]
                                         menuSelectedCombo.dirs += ['N']
-                                if comboMenuLoc[0]+400 <= event.pos[0] <= comboMenuLoc[0]+600 and comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
-                                    if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(menuSelectedCombo.arts):
-                                        menuSelectedCombo.arts.pop(math.floor((event.pos[1] - comboMenuLoc[1]-100)/50))
-                                        menuSelectedCombo.dirs.pop(math.floor((event.pos[1] - comboMenuLoc[1]-100)/50))
+                                if comboMenuLoc[0]+400 <= event.pos[0] <= comboMenuLoc[0]+600: 
+                                    if comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
+                                        if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(menuSelectedCombo.arts):
+                                            menuSelectedCombo.arts.pop(math.floor((event.pos[1] - comboMenuLoc[1]-100)/50))
+                                            menuSelectedCombo.dirs.pop(math.floor((event.pos[1] - comboMenuLoc[1]-100)/50))
+                                    if comboMenuLoc[1]+comboMenuSize[1]-100 <= event.pos[1] <= comboMenuLoc[1]+comboMenuSize[1]:
+                                        combos.remove(menuSelectedCombo)
+                                        menuSelectedCombo = None
                                 if comboMenuLoc[0]+600 <= event.pos[0] <= comboMenuLoc[0]+700 and comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
                                     if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(menuSelectedCombo.dirs):
                                         menuSelectedCombo.dirs[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)] = functions.rotate([copy.deepcopy(menuSelectedCombo.dirs)[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]], 'E')[0]

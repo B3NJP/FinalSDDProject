@@ -112,7 +112,6 @@ def rotate(dirs, dir):
         num = convertfrom[dirs[i]]
         num = (num+count)%4
         dirs[i] = convertto[num]
-    print(dirs)
     return dirs
     
 # def useCombo(attacker, defenderList, arts, dirs): Removed in place of having combo in combo class
