@@ -36,6 +36,7 @@ dispComboWind = False
 # Pause Menu
 greyMenu = 100, 100, 100, 150
 pauseMenu = pygame.Surface(screenSize)
+pauseMenu.fill(greyMenu)
 dispPauseMenu = False
 
 # Further Pause Menu
@@ -44,24 +45,36 @@ resButton = pygame.Surface(buttonSize)
 editComboButton = pygame.Surface(buttonSize)
 quitButton = pygame.Surface(buttonSize)
 menuFont = pygame.font.Font(None, 40)
+
+def drawButton(surface, el, text, font, location, size, backgroundCol, textCol):
+    surface.fill(backgroundCol)
+    pygame.draw.rect(surface, black, [0, 0] + size, 10)
+    surface.blit(font.render(text, True, black), [(size[0]-menuFont.size(text)[0])/2, (size[1]-menuFont.size(text)[1])/2])
+    el.blit(surface, location)
+
 def drawPauseMenuButtons(cursor):
-    resButton.fill(white)
-    pygame.draw.rect(resButton, black, [0, 0] + buttonSize, 10)
-    resButton.blit(menuFont.render("Resume", True, black), [(buttonSize[0]-menuFont.size("Resume")[0])/2, (buttonSize[1]-menuFont.size("Resume")[1])/2])
-    pauseMenu.blit(resButton, [200, 100])
-    
-    resButton.fill(white)
-    pygame.draw.rect(resButton, black, [0, 0] + buttonSize, 10)
-    resButton.blit(menuFont.render("Edit Combos", True, black), [(buttonSize[0]-menuFont.size("Edit Combos")[0])/2, (buttonSize[1]-menuFont.size("Resume")[1])/2])
-    pauseMenu.blit(resButton, [200, 300])
-    
-    quitButton.fill(white)
-    pygame.draw.rect(quitButton, black, [0, 0] + buttonSize, 10)
-    quitButton.blit(menuFont.render("Quit", True, black), [(buttonSize[0]-menuFont.size("Quit")[0])/2, (buttonSize[1]-menuFont.size("Resume")[1])/2])
-    pauseMenu.blit(quitButton, [200, 500])
+    # resButton.fill(white)
+    # pygame.draw.rect(resButton, black, [0, 0] + buttonSize, 10)
+    # resButton.blit(menuFont.render("Resume", True, black), [(buttonSize[0]-menuFont.size("Resume")[0])/2, (buttonSize[1]-menuFont.size("Resume")[1])/2])
+    # pauseMenu.blit(resButton, [200, 100])
+    # 
+    # resButton.fill(white)
+    # pygame.draw.rect(resButton, black, [0, 0] + buttonSize, 10)
+    # resButton.blit(menuFont.render("Edit Combos", True, black), [(buttonSize[0]-menuFont.size("Edit Combos")[0])/2, (buttonSize[1]-menuFont.size("Resume")[1])/2])
+    # pauseMenu.blit(resButton, [200, 300])
+    # 
+    # quitButton.fill(white)
+    # pygame.draw.rect(quitButton, black, [0, 0] + buttonSize, 10)
+    # quitButton.blit(menuFont.render("Quit", True, black), [(buttonSize[0]-menuFont.size("Quit")[0])/2, (buttonSize[1]-menuFont.size("Resume")[1])/2])
+    # pauseMenu.blit(quitButton, [200, 500])
+    drawButton(resButton, pauseMenu, "Resume", menuFont, [200, 100], buttonSize, white, black)
+    drawButton(editComboButton, pauseMenu, "Edit Combos", menuFont, [200, 300], buttonSize, white, black)
+    drawButton(quitButton, pauseMenu, "Quit", menuFont, [200, 500], buttonSize, white, black)
     
 # Combo Menu
 dispComboMenu = False
+def drawComboMenu():
+    pass
 
 # Text Font
 font = pygame.font.Font(None, 25)
@@ -87,68 +100,71 @@ chosenCombo = None
 
 while True:
     # Gets events
-    for event in pygame.event.get():
+    for event in pygame.event.get(): # Note consider moving these into functions in another file
         if event.type == pygame.QUIT:
             sys.exit()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                camera[1] += .5
-            if event.key == pygame.K_RIGHT:
-                camera[0] -= .5
-            if event.key == pygame.K_DOWN:
-                camera[1] -= .5
-            if event.key == pygame.K_LEFT:
-                camera[0] += .5
-
-            if event.key == pygame.K_w:
-                Alice.loc[1] -= 1
-            if event.key == pygame.K_a:
-                Alice.loc[0] -= 1
-            if event.key == pygame.K_s:
-                Alice.loc[1] += 1
-            if event.key == pygame.K_d:
-                Alice.loc[0] += 1
-
-            if event.key == pygame.K_p:
-                cArt = exampleArts.pierce
-            if event.key == pygame.K_g:
-                cArt = exampleArts.greatPierce
-            if event.key == pygame.K_b:
-                cArt = exampleArts.broadSlash
-
-            # if event.key == pygame.K_u:
-            #     functions.useArt(Alice, units, cArt, 0, 'U')
-            # if event.key == pygame.K_h:
-            #     functions.useArt(Alice, units, cArt, 0, 'L')
-            # if event.key == pygame.K_j:
-            #     functions.useArt(Alice, units, cArt, 0, 'D')
-            # if event.key == pygame.K_k:
-            #     functions.useArt(Alice, units, cArt, 0, 'R')
-            if chosenCombo:
-                if event.key == pygame.K_u:
-                    chosenCombo.run(Alice, units, 'N')
-                if event.key == pygame.K_k:
-                    chosenCombo.run(Alice, units, 'E')
-                if event.key == pygame.K_j:
-                    chosenCombo.run(Alice, units, 'S')
-                if event.key == pygame.K_h:
-                    chosenCombo.run(Alice, units, 'W')
-
-            # if event.key == pygame.K_z:
-            #     testComboA.run(Alice, units, testDirsA)
-            # if event.key == pygame.K_x:
-            #     testComboB.run(Alice, units, testDirsB)
-
-            if event.key == pygame.K_m:
-                dispStatWind = not dispStatWind
-            if event.key == pygame.K_n:
-                dispComboWind = not dispComboWind
-            if event.key == pygame.K_ESCAPE and not dispComboMenu:
+            if event.key == pygame.K_ESCAPE:
+                if dispComboMenu:
+                    dispComboMenu = False   
                 dispPauseMenu = not dispPauseMenu
-                
-            # Checks if number (to select combo)
-            if pygame.key.name(event.key) in "1234567890":
-                chosenCombo = combos[(int(pygame.key.name(event.key))-1)%10] # The % 10 here is unnessasary, using index -1 gets last in array, but I would rather not rely on a lucky coincidence which makes the code unclear
+            if not dispPauseMenu:
+                if event.key == pygame.K_UP:
+                    camera[1] += .5
+                if event.key == pygame.K_RIGHT:
+                    camera[0] -= .5
+                if event.key == pygame.K_DOWN:
+                    camera[1] -= .5
+                if event.key == pygame.K_LEFT:
+                    camera[0] += .5
+
+                if event.key == pygame.K_w:
+                    Alice.loc[1] -= 1
+                if event.key == pygame.K_a:
+                    Alice.loc[0] -= 1
+                if event.key == pygame.K_s:
+                    Alice.loc[1] += 1
+                if event.key == pygame.K_d:
+                    Alice.loc[0] += 1
+
+                if event.key == pygame.K_p:
+                    cArt = exampleArts.pierce
+                if event.key == pygame.K_g:
+                    cArt = exampleArts.greatPierce
+                if event.key == pygame.K_b:
+                    cArt = exampleArts.broadSlash
+
+                # if event.key == pygame.K_u:
+                #     functions.useArt(Alice, units, cArt, 0, 'U')
+                # if event.key == pygame.K_h:
+                #     functions.useArt(Alice, units, cArt, 0, 'L')
+                # if event.key == pygame.K_j:
+                #     functions.useArt(Alice, units, cArt, 0, 'D')
+                # if event.key == pygame.K_k:
+                #     functions.useArt(Alice, units, cArt, 0, 'R')
+                if chosenCombo:
+                    if event.key == pygame.K_u:
+                        chosenCombo.run(Alice, units, 'N')
+                    if event.key == pygame.K_k:
+                        chosenCombo.run(Alice, units, 'E')
+                    if event.key == pygame.K_j:
+                        chosenCombo.run(Alice, units, 'S')
+                    if event.key == pygame.K_h:
+                        chosenCombo.run(Alice, units, 'W')
+
+                # if event.key == pygame.K_z:
+                #     testComboA.run(Alice, units, testDirsA)
+                # if event.key == pygame.K_x:
+                #     testComboB.run(Alice, units, testDirsB)
+
+                if event.key == pygame.K_m:
+                    dispStatWind = not dispStatWind
+                if event.key == pygame.K_n:
+                    dispComboWind = not dispComboWind
+                    
+                # Checks if number (to select combo)
+                if pygame.key.name(event.key) in "1234567890":
+                    chosenCombo = combos[(int(pygame.key.name(event.key))-1)%10] # The % 10 here is unnessasary, using index -1 gets last in array, but I would rather not rely on a lucky coincidence which makes the code unclear
 
         if event.type == pygame.MOUSEBUTTONDOWN: # Mouse buttons
             if event.button == 1:
@@ -158,7 +174,6 @@ while True:
                             dispPauseMenu = False
                             
                         if 300 <= event.pos[1] <= 400:
-                            dispPauseMenu = False
                             dispComboMenu = True
                             
                         if 500 <= event.pos[1] <= 600:
@@ -194,12 +209,13 @@ while True:
         screen.blit(comboWindow, [screenSize[0]-comboWindowSize[0], screenSize[1]-comboWindowSize[1]])
         
     if dispPauseMenu:
-        pauseMenu.fill(greyMenu)
-        drawPauseMenuButtons('test')
+        if dispComboMenu:
+            pass
+        else:
+            drawPauseMenuButtons('test')
         screen.blit(pauseMenu, [0,0])
         
-    if dispComboMenu:
-        pass
+    
 
     # Draws everything to screen
     pygame.display.flip()
