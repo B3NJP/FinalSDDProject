@@ -179,7 +179,7 @@ while True:
                     
                 # Checks if number (to select combo)
                 if pygame.key.name(event.key) in "1234567890":
-                    chosenCombo = combos[(int(pygame.key.name(event.key))-1)%10] # The % 10 here is unnessasary, using index -1 gets last in array, but I would rather not rely on a lucky coincidence which makes the code unclear
+                    chosenCombo = combos[(int(pygame.key.name(event.key))-1)]
 
         if event.type == pygame.MOUSEBUTTONDOWN: # Mouse buttons
             if event.button == 1:
@@ -218,9 +218,9 @@ while True:
     if dispComboWind:
         comboWindow.fill(white)
         pygame.draw.rect(comboWindow, black, [0, 0] + comboWindowSize, 10)
-        for i in range(0, min(10, len(combos))):
+        for i in range(0, min(9, len(combos))):
             col = black if combos[i] != chosenCombo else blue
-            comboWindow.blit(font.render(str((i+1)%10) + ": " + combos[i].name, True, col), [10, 10 + 15*i])
+            comboWindow.blit(font.render(str(i+1) + ": " + combos[i].name, True, col), [10, 10 + 15*i])
         screen.blit(comboWindow, [screenSize[0]-comboWindowSize[0], screenSize[1]-comboWindowSize[1]])
         
     if dispPauseMenu:
