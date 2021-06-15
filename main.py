@@ -1,6 +1,6 @@
 import math, random, sys, copy
 import pygame
-import classes, functions, exampleArts, drawMap
+import classes, functions, exampleArts, drawMap, pygameFunctions
 pygame.init()
 
 # Basic Values
@@ -211,7 +211,8 @@ while True:
                                         menuSelectedCombo = combos[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]
                                 if comboMenuLoc[1]+comboMenuSize[1]-100 <= event.pos[1] <= comboMenuLoc[1]+comboMenuSize[1]:
                                     if len(combos) < 10:
-                                        combos += [classes.Combo('Name1', [], [])]
+                                        tempName = pygameFunctions.textInput()
+                                        combos += [classes.Combo(tempName, [], [])]
                             if menuSelectedCombo:
                                 if comboMenuLoc[0]+200 <= event.pos[0] <= comboMenuLoc[0]+400 and comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
                                     if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(knownArts):
