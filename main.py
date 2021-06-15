@@ -76,6 +76,18 @@ def drawComboMenu():
     # Arrow page buttons
     drawButton(comboMenu, "<", arrowFont, [200, 500], [100, 100], white, black)
     drawButton(comboMenu, ">", arrowFont, [300, 500], [100, 100], white, black)
+    
+    # List Combos
+    comboMenu.blit(menuFont.render("Combos:", True, black), [(200-menuFont.size("Combos:")[0])/2, (100-menuFont.size("Combos:")[1])/2])
+    for i in range(0, len(combos)):
+        text = str(i+1) + ": " + combos[i].name
+        comboMenu.blit(menuFont.render(text, True, black), [20, 100+i*40])
+        
+    # List Known Arts
+    comboMenu.blit(menuFont.render("Arts:", True, black), [(200-menuFont.size("Arts:")[0])/2+200, (100-menuFont.size("Arts:")[1])/2])
+    for i in range(0, min(len(knownArts),10)):
+        text = str((i+1)%10) + ": " + knownArts[i].name # Make adjustment for longer art names
+        comboMenu.blit(menuFont.render(text, True, black), [220, 100+i*40])
 
 # Text Font
 font = pygame.font.Font(None, 25)
@@ -98,6 +110,8 @@ testComboB = classes.Combo('Test2', [exampleArts.broadSlash]*8, testDirsB)
 
 combos = [testComboA, testComboB]
 chosenCombo = None
+
+knownArts = [exampleArts.pierce, exampleArts.broadSlash, exampleArts.greatPierce]
 
 while True:
     # Gets events
