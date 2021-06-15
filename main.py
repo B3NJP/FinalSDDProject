@@ -41,6 +41,7 @@ dispPauseMenu = False
 # Further Pause Menu
 buttonSize = [600, 100]
 resButton = pygame.Surface(buttonSize)
+editComboButton = pygame.Surface(buttonSize)
 quitButton = pygame.Surface(buttonSize)
 menuFont = pygame.font.Font(None, 40)
 def drawPauseMenuButtons(cursor):
@@ -49,12 +50,18 @@ def drawPauseMenuButtons(cursor):
     resButton.blit(menuFont.render("Resume", True, black), [(buttonSize[0]-menuFont.size("Resume")[0])/2, (buttonSize[1]-menuFont.size("Resume")[1])/2])
     pauseMenu.blit(resButton, [200, 100])
     
+    resButton.fill(white)
+    pygame.draw.rect(resButton, black, [0, 0] + buttonSize, 10)
+    resButton.blit(menuFont.render("Edit Combos", True, black), [(buttonSize[0]-menuFont.size("Edit Combos")[0])/2, (buttonSize[1]-menuFont.size("Resume")[1])/2])
+    pauseMenu.blit(resButton, [200, 300])
+    
     quitButton.fill(white)
     pygame.draw.rect(quitButton, black, [0, 0] + buttonSize, 10)
     quitButton.blit(menuFont.render("Quit", True, black), [(buttonSize[0]-menuFont.size("Quit")[0])/2, (buttonSize[1]-menuFont.size("Resume")[1])/2])
-    pauseMenu.blit(quitButton, [200, 300])
+    pauseMenu.blit(quitButton, [200, 500])
     
-
+# Combo Menu
+dispComboMenu = False
 
 # Text Font
 font = pygame.font.Font(None, 25)
@@ -136,7 +143,7 @@ while True:
                 dispStatWind = not dispStatWind
             if event.key == pygame.K_n:
                 dispComboWind = not dispComboWind
-            if event.key == pygame.K_ESCAPE:
+            if event.key == pygame.K_ESCAPE and not dispComboMenu:
                 dispPauseMenu = not dispPauseMenu
                 
             # Checks if number (to select combo)
@@ -151,6 +158,10 @@ while True:
                             dispPauseMenu = False
                             
                         if 300 <= event.pos[1] <= 400:
+                            dispPauseMenu = False
+                            dispComboMenu = True
+                            
+                        if 500 <= event.pos[1] <= 600:
                             sys.exit()
                 else:
                     # Gets location of mouse (adjusted for scroll)
@@ -186,6 +197,9 @@ while True:
         pauseMenu.fill(greyMenu)
         drawPauseMenuButtons('test')
         screen.blit(pauseMenu, [0,0])
+        
+    if dispComboMenu:
+        pass
 
     # Draws everything to screen
     pygame.display.flip()
