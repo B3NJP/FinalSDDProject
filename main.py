@@ -47,9 +47,9 @@ units = [Alice, Bill]
 cArt = exampleArts.pierce
 
 testComboA = classes.Combo('Test1', [exampleArts.pierce, exampleArts.greatPierce])
-testDirsA = ['U', 'U']
+testDirsA = ['N', 'N']
 testComboB = classes.Combo('Test2', [exampleArts.broadSlash]*8)
-testDirsB = ['U', 'R', 'R', 'D', 'D', 'L', 'L', 'U']
+testDirsB = ['N', 'E', 'E', 'S', 'S', 'W', 'W', 'N']
 
 combos = [testComboA, testComboB]
 

@@ -37,7 +37,7 @@ def findDefenders(defenders, locs):
 
 def determineLoc(dir, mods):
     loc = [0,0]
-    if dir == 'U':
+    if dir == 'N':
         for i in mods:
             if i == 'F':
                 loc[1] -= 1
@@ -47,7 +47,7 @@ def determineLoc(dir, mods):
                 loc[0] += 1
             elif i == 'L':
                 loc[0] -= 1
-    if dir == 'D':
+    if dir == 'S':
         for i in mods:
             if i == 'F':
                 loc[1] += 1
@@ -57,7 +57,7 @@ def determineLoc(dir, mods):
                 loc[0] -= 1
             elif i == 'L':
                 loc[0] += 1
-    if dir == 'L':
+    if dir == 'E':
         for i in mods:
             if i == 'F':
                 loc[0] -= 1
@@ -67,7 +67,7 @@ def determineLoc(dir, mods):
                 loc[1] -= 1
             elif i == 'L':
                 loc[1] += 1
-    if dir == 'R':
+    if dir == 'W':
         for i in mods:
             if i == 'F':
                 loc[0] += 1
