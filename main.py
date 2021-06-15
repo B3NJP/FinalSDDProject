@@ -220,7 +220,7 @@ while True:
         pygame.draw.rect(comboWindow, black, [0, 0] + comboWindowSize, 10)
         for i in range(0, min(10, len(combos))):
             col = black if combos[i] != chosenCombo else blue
-            comboWindow.blit(font.render(str(i+1) + ": " + combos[i].name, True, col), [10, 10 + 15*i])
+            comboWindow.blit(font.render(str((i+1)%10) + ": " + combos[i].name, True, col), [10, 10 + 15*i])
         screen.blit(comboWindow, [screenSize[0]-comboWindowSize[0], screenSize[1]-comboWindowSize[1]])
         
     if dispPauseMenu:
