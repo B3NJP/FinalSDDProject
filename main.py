@@ -47,7 +47,7 @@ def drawButton(surface, text, font, location, size, backgroundCol, textCol):
     button = pygame.Surface(size)
     button.fill(backgroundCol)
     pygame.draw.rect(button, black, [0, 0] + size, 10)
-    button.blit(font.render(text, True, black), [(size[0]-font.size(text)[0])/2, (size[1]-font.size(text)[1])/2])
+    button.blit(font.render(text, True, textCol), [(size[0]-font.size(text)[0])/2, (size[1]-font.size(text)[1])/2])
     surface.blit(button, location)
     return button
 
@@ -61,11 +61,11 @@ dispComboMenu = False
 comboMenuSize = [600, 600]
 comboMenu = pygame.Surface(comboMenuSize)
 arrowFont = pygame.font.Font(None, 60)
-def drawComboMenu():
+def drawComboMenu(highlight):
     comboMenu.fill(white)
     pygame.draw.rect(comboMenu, black, [0, 0] + comboMenuSize, 10)
     
-    # Initial rectangle boxes
+    # Initial Rectangle Boxes
     pygame.draw.rect(comboMenu, black, [0, 0, 200, 600], 10)
     pygame.draw.rect(comboMenu, black, [200, 0, 200, 600], 10)
     pygame.draw.rect(comboMenu, black, [400, 0, 200, 600], 10)
@@ -73,21 +73,35 @@ def drawComboMenu():
     # New Button
     drawButton(comboMenu, "New Combo", menuFont, [0, 500], [200, 100], white, black)
     
-    # Arrow page buttons
+    # Arrow Page Buttons
     drawButton(comboMenu, "<", arrowFont, [200, 500], [100, 100], white, black)
     drawButton(comboMenu, ">", arrowFont, [300, 500], [100, 100], white, black)
     
-    # List Combos
+    # Delete Button
+    drawButton(comboMenu, "Delete", menuFont, [400, 500], [200, 100], white, black)
+    
+    # List Combos - For both of these, consider using buttons instead of numbers
     comboMenu.blit(menuFont.render("Combos:", True, black), [(200-menuFont.size("Combos:")[0])/2, (100-menuFont.size("Combos:")[1])/2])
     for i in range(0, len(combos)):
-        text = str(i+1) + ": " + combos[i].name
-        comboMenu.blit(menuFont.render(text, True, black), [20, 100+i*40])
+        # text = str(i+1) + ": " + combos[i].name
+        # comboMenu.blit(menuFont.render(text, True, black), [20, 100+i*40])
+        if combos[i] == highlight:
+            drawButton(comboMenu, combos[i].name, menuFont, [0, 100+i*50], [200, 50], white, blue)
+        else:
+            drawButton(comboMenu, combos[i].name, menuFont, [0, 100+i*50], [200, 50], white, black)
         
     # List Known Arts
     comboMenu.blit(menuFont.render("Arts:", True, black), [(200-menuFont.size("Arts:")[0])/2+200, (100-menuFont.size("Arts:")[1])/2])
     for i in range(0, min(len(knownArts),10)):
-        text = str((i+1)%10) + ": " + knownArts[i].name # Make adjustment for longer art names
-        comboMenu.blit(menuFont.render(text, True, black), [220, 100+i*40])
+        # text = str((i+1)%10) + ": " + knownArts[i].name # Make adjustment for longer art names
+        # comboMenu.blit(menuFont.render(text, True, black), [220, 100+i*40])
+        drawButton(comboMenu, knownArts[i].name, menuFont, [200, 100+i*50], [200, 50], white, black)
+        
+    if highlight:
+        comboMenu.blit(menuFont.render(highlight.name, True, black), [(200-menuFont.size(highlight.name)[0])/2+400, (100-menuFont.size(highlight.name)[1])/2])
+        for i in range(0, len(highlight.arts)):
+            drawButton(comboMenu, highlight.arts[i].name, menuFont, [400, 100+i*50], [200, 50], white, black)
+        
 
 # Text Font
 font = pygame.font.Font(None, 25)
@@ -226,7 +240,7 @@ while True:
     if dispPauseMenu:
         pauseMenu.fill(greyMenu)
         if dispComboMenu:
-            drawComboMenu()
+            drawComboMenu(testComboA)
             pauseMenu.blit(comboMenu, [200, 100])
         else:
             drawPauseMenuButtons('test')
