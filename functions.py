@@ -37,7 +37,7 @@ def findDefenders(defenders, locs):
 
 def determineLoc(dir, mods):
     loc = [0,0]
-    if dir == 'U':
+    if dir == 'N':
         for i in mods:
             if i == 'F':
                 loc[1] -= 1
@@ -47,7 +47,7 @@ def determineLoc(dir, mods):
                 loc[0] += 1
             elif i == 'L':
                 loc[0] -= 1
-    if dir == 'D':
+    if dir == 'S':
         for i in mods:
             if i == 'F':
                 loc[1] += 1
@@ -57,17 +57,7 @@ def determineLoc(dir, mods):
                 loc[0] -= 1
             elif i == 'L':
                 loc[0] += 1
-    if dir == 'L':
-        for i in mods:
-            if i == 'F':
-                loc[0] -= 1
-            elif i == 'B':
-                loc[0] += 1
-            elif i == 'R':
-                loc[1] -= 1
-            elif i == 'L':
-                loc[1] += 1
-    if dir == 'R':
+    if dir == 'E':
         for i in mods:
             if i == 'F':
                 loc[0] += 1
@@ -77,6 +67,17 @@ def determineLoc(dir, mods):
                 loc[1] += 1
             elif i == 'L':
                 loc[1] -= 1
+                
+    if dir == 'W':
+        for i in mods:
+            if i == 'F':
+                loc[0] -= 1
+            elif i == 'B':
+                loc[0] += 1
+            elif i == 'R':
+                loc[1] -= 1
+            elif i == 'L':
+                loc[1] += 1
     return loc
 
 def useArt(attacker, defenderList, art, combo, dir):
@@ -94,7 +95,7 @@ def useArt(attacker, defenderList, art, combo, dir):
         i.HP -= dmg
 
     ccLoc = determineLoc(dir, art.cc)
-    print(ccLoc)
+    # print(ccLoc)
     for i in defenders:
         i.loc[0] += ccLoc[0]
         i.loc[1] += ccLoc[1]
@@ -103,6 +104,17 @@ def useArt(attacker, defenderList, art, combo, dir):
     attacker.loc[0] += mvLoc[0]
     attacker.loc[1] += mvLoc[1]
 
-def combo(attacker, defenderList, arts, dirs):
-    for i,v in enumerate(arts):
-        useArt(attacker, defenderList, v, i, dirs[i])
+def rotate(dirs, dir):
+    convertfrom = {'N': 0, 'E': 1, 'S': 2, 'W': 3}
+    convertto = {0: 'N', 1: 'E', 2: 'S', 3: 'W'}
+    count = convertfrom[dir]
+    for i in range(0, len(dirs)):
+        num = convertfrom[dirs[i]]
+        num = (num+count)%4
+        dirs[i] = convertto[num]
+    print(dirs)
+    return dirs
+    
+# def useCombo(attacker, defenderList, arts, dirs): Removed in place of having combo in combo class
+#     for i,v in enumerate(arts):
+#         useArt(attacker, defenderList, v, i, dirs[i])
