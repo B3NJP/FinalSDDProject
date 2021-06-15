@@ -47,7 +47,7 @@ def drawButton(surface, text, font, location, size, backgroundCol, textCol):
     button = pygame.Surface(size)
     button.fill(backgroundCol)
     pygame.draw.rect(button, black, [0, 0] + size, 10)
-    button.blit(font.render(text, True, black), [(size[0]-menuFont.size(text)[0])/2, (size[1]-menuFont.size(text)[1])/2])
+    button.blit(font.render(text, True, black), [(size[0]-font.size(text)[0])/2, (size[1]-font.size(text)[1])/2])
     surface.blit(button, location)
     return button
 
@@ -60,6 +60,7 @@ def drawPauseMenuButtons(cursor):
 dispComboMenu = False
 comboMenuSize = [600, 600]
 comboMenu = pygame.Surface(comboMenuSize)
+arrowFont = pygame.font.Font(None, 60)
 def drawComboMenu():
     comboMenu.fill(white)
     pygame.draw.rect(comboMenu, black, [0, 0] + comboMenuSize, 10)
@@ -70,10 +71,11 @@ def drawComboMenu():
     pygame.draw.rect(comboMenu, black, [400, 0, 200, 600], 10)
     
     # New Button
-    newButton = pygame.surface
+    drawButton(comboMenu, "New Combo", menuFont, [0, 500], [200, 100], white, black)
     
     # Arrow page buttons
-    
+    drawButton(comboMenu, "<", arrowFont, [200, 500], [100, 100], white, black)
+    drawButton(comboMenu, ">", arrowFont, [300, 500], [100, 100], white, black)
 
 # Text Font
 font = pygame.font.Font(None, 25)
