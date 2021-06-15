@@ -7,6 +7,7 @@ pygame.init()
 box = [100, 100]
 screenSize = [1000, 800]
 black = 0, 0, 0
+blue = 0, 0, 255
 white = 255, 255, 255
 
 screen = pygame.display.set_mode(screenSize)
@@ -86,24 +87,37 @@ while True:
             if event.key == pygame.K_b:
                 cArt = exampleArts.broadSlash
 
-            if event.key == pygame.K_u:
-                functions.useArt(Alice, units, cArt, 0, 'U')
-            if event.key == pygame.K_h:
-                functions.useArt(Alice, units, cArt, 0, 'L')
-            if event.key == pygame.K_j:
-                functions.useArt(Alice, units, cArt, 0, 'D')
-            if event.key == pygame.K_k:
-                functions.useArt(Alice, units, cArt, 0, 'R')
+            # if event.key == pygame.K_u:
+            #     functions.useArt(Alice, units, cArt, 0, 'U')
+            # if event.key == pygame.K_h:
+            #     functions.useArt(Alice, units, cArt, 0, 'L')
+            # if event.key == pygame.K_j:
+            #     functions.useArt(Alice, units, cArt, 0, 'D')
+            # if event.key == pygame.K_k:
+            #     functions.useArt(Alice, units, cArt, 0, 'R')
+            if chosenCombo:
+                if event.key == pygame.K_u:
+                    chosenCombo.run(Alice, units, 'N')
+                if event.key == pygame.K_k:
+                    chosenCombo.run(Alice, units, 'E')
+                if event.key == pygame.K_j:
+                    chosenCombo.run(Alice, units, 'S')
+                if event.key == pygame.K_h:
+                    chosenCombo.run(Alice, units, 'W')
 
-            if event.key == pygame.K_z:
-                testComboA.run(Alice, units, testDirsA)
-            if event.key == pygame.K_x:
-                testComboB.run(Alice, units, testDirsB)
+            # if event.key == pygame.K_z:
+            #     testComboA.run(Alice, units, testDirsA)
+            # if event.key == pygame.K_x:
+            #     testComboB.run(Alice, units, testDirsB)
 
             if event.key == pygame.K_m:
                 dispStatWind = not dispStatWind
             if event.key == pygame.K_n:
                 dispComboWind = not dispComboWind
+                
+            # Checks if number (to select combo)
+            if pygame.key.name(event.key) in "1234567890":
+                chosenCombo = combos[(int(pygame.key.name(event.key))-1)%10] # The % 10 here is unnessasary, using index -1 gets last in array, but I would rather not rely on a lucky coincidence which makes the code unclear
 
         if event.type == pygame.MOUSEBUTTONDOWN: # Mouse buttons
             if event.button == 1:
@@ -131,7 +145,8 @@ while True:
         comboWindow.fill(white)
         pygame.draw.rect(comboWindow, black, [0, 0] + comboWindowSize, 10)
         for i in range(0, min(10, len(combos))):
-            comboWindow.blit(font.render(str(i+1) + ": " + combos[i].name, True, black), [10, 10 + 15*i])
+            col = black if combos[i] != chosenCombo else blue
+            comboWindow.blit(font.render(str(i+1) + ": " + combos[i].name, True, col), [10, 10 + 15*i])
         screen.blit(comboWindow, [screenSize[0]-comboWindowSize[0], screenSize[1]-comboWindowSize[1]])
 
     # Draws everything to screen

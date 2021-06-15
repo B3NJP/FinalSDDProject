@@ -1,4 +1,4 @@
-import functions
+import functions, copy
 
 class Map:
     def __init__(self):
@@ -34,6 +34,6 @@ class Combo:
         self.dirs = dirs
         
     def run(self, attacker, defenderList, rotation):
-        cdirs = functions.rotate(self.dirs)
+        cdirs = functions.rotate(copy.deepcopy(self.dirs), rotation)
         for i,v in enumerate(self.arts):
             functions.useArt(attacker, defenderList, v, i, cdirs[i])

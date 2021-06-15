@@ -60,23 +60,24 @@ def determineLoc(dir, mods):
     if dir == 'E':
         for i in mods:
             if i == 'F':
-                loc[0] -= 1
-            elif i == 'B':
                 loc[0] += 1
+            elif i == 'B':
+                loc[0] -= 1
             elif i == 'R':
-                loc[1] -= 1
-            elif i == 'L':
                 loc[1] += 1
+            elif i == 'L':
+                loc[1] -= 1
+                
     if dir == 'W':
         for i in mods:
             if i == 'F':
-                loc[0] += 1
-            elif i == 'B':
                 loc[0] -= 1
+            elif i == 'B':
+                loc[0] += 1
             elif i == 'R':
-                loc[1] += 1
-            elif i == 'L':
                 loc[1] -= 1
+            elif i == 'L':
+                loc[1] += 1
     return loc
 
 def useArt(attacker, defenderList, art, combo, dir):
@@ -94,7 +95,7 @@ def useArt(attacker, defenderList, art, combo, dir):
         i.HP -= dmg
 
     ccLoc = determineLoc(dir, art.cc)
-    print(ccLoc)
+    # print(ccLoc)
     for i in defenders:
         i.loc[0] += ccLoc[0]
         i.loc[1] += ccLoc[1]
@@ -111,6 +112,7 @@ def rotate(dirs, dir):
         num = convertfrom[dirs[i]]
         num = (num+count)%4
         dirs[i] = convertto[num]
+    print(dirs)
     return dirs
     
 # def useCombo(attacker, defenderList, arts, dirs): Removed in place of having combo in combo class
