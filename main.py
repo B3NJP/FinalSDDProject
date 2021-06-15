@@ -41,40 +41,39 @@ dispPauseMenu = False
 
 # Further Pause Menu
 buttonSize = [600, 100]
-resButton = pygame.Surface(buttonSize)
-editComboButton = pygame.Surface(buttonSize)
-quitButton = pygame.Surface(buttonSize)
 menuFont = pygame.font.Font(None, 40)
 
-def drawButton(surface, el, text, font, location, size, backgroundCol, textCol):
-    surface.fill(backgroundCol)
-    pygame.draw.rect(surface, black, [0, 0] + size, 10)
-    surface.blit(font.render(text, True, black), [(size[0]-menuFont.size(text)[0])/2, (size[1]-menuFont.size(text)[1])/2])
-    el.blit(surface, location)
+def drawButton(surface, text, font, location, size, backgroundCol, textCol):
+    button = pygame.Surface(size)
+    button.fill(backgroundCol)
+    pygame.draw.rect(button, black, [0, 0] + size, 10)
+    button.blit(font.render(text, True, black), [(size[0]-menuFont.size(text)[0])/2, (size[1]-menuFont.size(text)[1])/2])
+    surface.blit(button, location)
+    return button
 
 def drawPauseMenuButtons(cursor):
-    # resButton.fill(white)
-    # pygame.draw.rect(resButton, black, [0, 0] + buttonSize, 10)
-    # resButton.blit(menuFont.render("Resume", True, black), [(buttonSize[0]-menuFont.size("Resume")[0])/2, (buttonSize[1]-menuFont.size("Resume")[1])/2])
-    # pauseMenu.blit(resButton, [200, 100])
-    # 
-    # resButton.fill(white)
-    # pygame.draw.rect(resButton, black, [0, 0] + buttonSize, 10)
-    # resButton.blit(menuFont.render("Edit Combos", True, black), [(buttonSize[0]-menuFont.size("Edit Combos")[0])/2, (buttonSize[1]-menuFont.size("Resume")[1])/2])
-    # pauseMenu.blit(resButton, [200, 300])
-    # 
-    # quitButton.fill(white)
-    # pygame.draw.rect(quitButton, black, [0, 0] + buttonSize, 10)
-    # quitButton.blit(menuFont.render("Quit", True, black), [(buttonSize[0]-menuFont.size("Quit")[0])/2, (buttonSize[1]-menuFont.size("Resume")[1])/2])
-    # pauseMenu.blit(quitButton, [200, 500])
-    drawButton(resButton, pauseMenu, "Resume", menuFont, [200, 100], buttonSize, white, black)
-    drawButton(editComboButton, pauseMenu, "Edit Combos", menuFont, [200, 300], buttonSize, white, black)
-    drawButton(quitButton, pauseMenu, "Quit", menuFont, [200, 500], buttonSize, white, black)
+    drawButton(pauseMenu, "Resume", menuFont, [200, 100], buttonSize, white, black)
+    drawButton(pauseMenu, "Edit Combos", menuFont, [200, 300], buttonSize, white, black)
+    drawButton(pauseMenu, "Quit", menuFont, [200, 500], buttonSize, white, black)
     
 # Combo Menu
 dispComboMenu = False
+comboMenuSize = [600, 600]
+comboMenu = pygame.Surface(comboMenuSize)
 def drawComboMenu():
-    pass
+    comboMenu.fill(white)
+    pygame.draw.rect(comboMenu, black, [0, 0] + comboMenuSize, 10)
+    
+    # Initial rectangle boxes
+    pygame.draw.rect(comboMenu, black, [0, 0, 200, 600], 10)
+    pygame.draw.rect(comboMenu, black, [200, 0, 200, 600], 10)
+    pygame.draw.rect(comboMenu, black, [400, 0, 200, 600], 10)
+    
+    # New Button
+    newButton = pygame.surface
+    
+    # Arrow page buttons
+    
 
 # Text Font
 font = pygame.font.Font(None, 25)
@@ -209,8 +208,10 @@ while True:
         screen.blit(comboWindow, [screenSize[0]-comboWindowSize[0], screenSize[1]-comboWindowSize[1]])
         
     if dispPauseMenu:
+        pauseMenu.fill(greyMenu)
         if dispComboMenu:
-            pass
+            drawComboMenu()
+            pauseMenu.blit(comboMenu, [200, 100])
         else:
             drawPauseMenuButtons('test')
         screen.blit(pauseMenu, [0,0])
