@@ -1,4 +1,4 @@
-import math, random, sys
+import math, random, sys, copy
 import pygame
 import classes, functions, exampleArts, drawMap
 pygame.init()
@@ -209,6 +209,18 @@ while True:
                             if comboMenuLoc[0] <= event.pos[0] <= comboMenuLoc[0]+200 and comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
                                 if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(combos):
                                     menuSelectedCombo = combos[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]
+                            if menuSelectedCombo:
+                                if comboMenuLoc[0]+200 <= event.pos[0] <= comboMenuLoc[0]+400 and comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
+                                    if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(knownArts):
+                                        menuSelectedCombo.arts += [knownArts[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]]
+                                        menuSelectedCombo.dirs += ['N']
+                                if comboMenuLoc[0]+400 <= event.pos[0] <= comboMenuLoc[0]+600 and comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
+                                    if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(menuSelectedCombo.arts):
+                                        menuSelectedCombo.arts.pop(math.floor((event.pos[1] - comboMenuLoc[1]-100)/50))
+                                        menuSelectedCombo.dirs.pop(math.floor((event.pos[1] - comboMenuLoc[1]-100)/50))
+                                if comboMenuLoc[0]+600 <= event.pos[0] <= comboMenuLoc[0]+700 and comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
+                                    if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(menuSelectedCombo.dirs):
+                                        menuSelectedCombo.dirs[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)] = functions.rotate([copy.deepcopy(menuSelectedCombo.dirs)[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]], 'E')[0]
                     else:
                         if 200 <= event.pos[0] <= 800:
                             if 100 <= event.pos[1] <= 200:
