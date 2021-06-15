@@ -127,12 +127,9 @@ while True:
         
     if dispComboWind:
         comboWindow.fill(white)
-        pygame.draw.rect(comboWindow, black, [0, 0] + comboWindow, 10)
-        comboWindow.blit(font.render(selected.name, True, black), [10, 10])
+        pygame.draw.rect(comboWindow, black, [0, 0] + comboWindowSize, 10)
         for i in range(0, min(10, len(combos))):
-            pass
-        comboWindow.blit(font.render('HP: ' + str(selected.HP), True, black), [10, 25])
-        comboWindow.blit(font.render('MP: ' + str(selected.MP), True, black), [10, 40])
+            comboWindow.blit(font.render(str(i+1) + ": " + combos[i].name, True, black), [10, 10 + 15*i])
         screen.blit(comboWindow, [screenSize[0]-comboWindowSize[0], screenSize[1]-comboWindowSize[1]])
 
     # Draws everything to screen
