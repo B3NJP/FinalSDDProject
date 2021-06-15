@@ -46,12 +46,14 @@ units = [Alice, Bill]
 
 cArt = exampleArts.pierce
 
-testComboA = classes.Combo('Test1', [exampleArts.pierce, exampleArts.greatPierce])
 testDirsA = ['N', 'N']
-testComboB = classes.Combo('Test2', [exampleArts.broadSlash]*8)
+testComboA = classes.Combo('Test1', [exampleArts.pierce, exampleArts.greatPierce], testDirsA)
+
 testDirsB = ['N', 'E', 'E', 'S', 'S', 'W', 'W', 'N']
+testComboB = classes.Combo('Test2', [exampleArts.broadSlash]*8, testDirsB)
 
 combos = [testComboA, testComboB]
+chosenCombo = None
 
 while True:
     # Gets events
