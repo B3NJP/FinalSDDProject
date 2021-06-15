@@ -33,6 +33,28 @@ page = 0
 comboWindow.set_alpha(200)
 dispComboWind = False
 
+# Pause Menu
+greyMenu = 100, 100, 100, 150
+pauseMenu = pygame.Surface(screenSize)
+dispPauseMenu = False
+
+# Further Pause Menu
+buttonSize = [600, 100]
+resButton = pygame.Surface(buttonSize)
+quitButton = pygame.Surface(buttonSize)
+menuFont = pygame.font.Font(None, 40)
+def drawPauseMenuButtons(cursor):
+    resButton.fill(white)
+    pygame.draw.rect(resButton, black, [0, 0] + buttonSize, 10)
+    resButton.blit(menuFont.render("Resume", True, black), [(buttonSize[0]-menuFont.size("Resume")[0])/2, (buttonSize[1]-menuFont.size("Resume")[1])/2])
+    pauseMenu.blit(resButton, [200, 100])
+    
+    quitButton.fill(white)
+    pygame.draw.rect(quitButton, black, [0, 0] + buttonSize, 10)
+    quitButton.blit(menuFont.render("Quit", True, black), [(buttonSize[0]-menuFont.size("Quit")[0])/2, (buttonSize[1]-menuFont.size("Resume")[1])/2])
+    pauseMenu.blit(quitButton, [200, 300])
+    
+
 
 # Text Font
 font = pygame.font.Font(None, 25)
@@ -114,6 +136,8 @@ while True:
                 dispStatWind = not dispStatWind
             if event.key == pygame.K_n:
                 dispComboWind = not dispComboWind
+            if event.key == pygame.K_ESCAPE:
+                dispPauseMenu = not dispPauseMenu
                 
             # Checks if number (to select combo)
             if pygame.key.name(event.key) in "1234567890":
@@ -121,13 +145,17 @@ while True:
 
         if event.type == pygame.MOUSEBUTTONDOWN: # Mouse buttons
             if event.button == 1:
-                # Gets location of mouse (adjusted for scroll)
-                location = [int((event.pos[0]-camera[0]*100)//100), int((event.pos[1]-camera[1]*100)//100)]
+                if dispPauseMenu:
+                    pass
+                else:
+                    # Gets location of mouse (adjusted for scroll)
+                    location = [int((event.pos[0]-camera[0]*100)//100), int((event.pos[1]-camera[1]*100)//100)]
 
-                for i in units:
-                    if i.loc == location:
-                        selected = i
-                        break
+                    for i in units:
+                        if i.loc == location:
+                            selected = i
+                            break
+                        
                         
     screen.fill(white) # Makes the screen white
     
@@ -148,6 +176,11 @@ while True:
             col = black if combos[i] != chosenCombo else blue
             comboWindow.blit(font.render(str(i+1) + ": " + combos[i].name, True, col), [10, 10 + 15*i])
         screen.blit(comboWindow, [screenSize[0]-comboWindowSize[0], screenSize[1]-comboWindowSize[1]])
+        
+    if dispPauseMenu:
+        pauseMenu.fill(greyMenu)
+        drawPauseMenuButtons('test')
+        screen.blit(pauseMenu, [0,0])
 
     # Draws everything to screen
     pygame.display.flip()
