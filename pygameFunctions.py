@@ -18,7 +18,7 @@ def textInput(pattern = '.*'):
                         text += pygame.key.name(event.key)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     finished = True
-        if not re.match(pattern, text):
+        if not re.fullmatch(pattern, text):
             break
     return text
     
