@@ -59,6 +59,7 @@ def drawPauseMenuButtons(cursor):
 # Combo Menu
 dispComboMenu = False
 comboMenuSize = [600, 600]
+comboMenuLoc = [200, 100]
 comboMenu = pygame.Surface(comboMenuSize)
 arrowFont = pygame.font.Font(None, 60)
 def drawComboMenu(highlight):
@@ -97,6 +98,7 @@ def drawComboMenu(highlight):
         # comboMenu.blit(menuFont.render(text, True, black), [220, 100+i*40])
         drawButton(comboMenu, knownArts[i].name, menuFont, [200, 100+i*50], [200, 50], white, black)
         
+    # Shows the selected combo
     if highlight:
         comboMenu.blit(menuFont.render(highlight.name, True, black), [(200-menuFont.size(highlight.name)[0])/2+400, (100-menuFont.size(highlight.name)[1])/2])
         for i in range(0, len(highlight.arts)):
@@ -124,6 +126,7 @@ testComboB = classes.Combo('Test2', [exampleArts.broadSlash]*8, testDirsB)
 
 combos = [testComboA, testComboB]
 chosenCombo = None
+menuSelectedCombo = None#testComboA
 
 knownArts = [exampleArts.pierce, exampleArts.broadSlash, exampleArts.greatPierce]
 
@@ -137,6 +140,7 @@ while True:
                 if dispComboMenu:
                     dispComboMenu = False   
                 dispPauseMenu = not dispPauseMenu
+                
             if not dispPauseMenu:
                 if event.key == pygame.K_UP:
                     camera[1] += .5
@@ -198,15 +202,21 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN: # Mouse buttons
             if event.button == 1:
                 if dispPauseMenu:
-                    if 200 <= event.pos[0] <= 800:
-                        if 100 <= event.pos[1] <= 200:
-                            dispPauseMenu = False
-                            
-                        if 300 <= event.pos[1] <= 400:
-                            dispComboMenu = True
-                            
-                        if 500 <= event.pos[1] <= 600:
-                            sys.exit()
+                    if dispComboMenu:
+                        if comboMenuLoc[0] <= event.pos[0] <= comboMenuLoc[0]+comboMenuSize[0]:
+                            if comboMenuLoc[0] <= event.pos[0] <= comboMenuLoc[0]+200 and comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
+                                if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(combos):
+                                    menuSelectedCombo = combos[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]
+                    else:
+                        if 200 <= event.pos[0] <= 800:
+                            if 100 <= event.pos[1] <= 200:
+                                dispPauseMenu = False
+                                
+                            if 300 <= event.pos[1] <= 400:
+                                dispComboMenu = True
+                                
+                            if 500 <= event.pos[1] <= 600:
+                                sys.exit()
                 else:
                     # Gets location of mouse (adjusted for scroll)
                     location = [int((event.pos[0]-camera[0]*100)//100), int((event.pos[1]-camera[1]*100)//100)]
@@ -240,8 +250,8 @@ while True:
     if dispPauseMenu:
         pauseMenu.fill(greyMenu)
         if dispComboMenu:
-            drawComboMenu(testComboA)
-            pauseMenu.blit(comboMenu, [200, 100])
+            drawComboMenu(menuSelectedCombo)
+            pauseMenu.blit(comboMenu, comboMenuLoc)
         else:
             drawPauseMenuButtons('test')
         screen.blit(pauseMenu, [0,0])
