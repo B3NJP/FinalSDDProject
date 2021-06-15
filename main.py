@@ -146,7 +146,12 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN: # Mouse buttons
             if event.button == 1:
                 if dispPauseMenu:
-                    pass
+                    if 200 <= event.pos[0] <= 800:
+                        if 100 <= event.pos[1] <= 200:
+                            dispPauseMenu = False
+                            
+                        if 300 <= event.pos[1] <= 400:
+                            sys.exit()
                 else:
                     # Gets location of mouse (adjusted for scroll)
                     location = [int((event.pos[0]-camera[0]*100)//100), int((event.pos[1]-camera[1]*100)//100)]
