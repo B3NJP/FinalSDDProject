@@ -14,8 +14,13 @@ def textInput(pattern = '.*'):
                         text = text[:-1]
                     elif event.key == pygame.K_RETURN:
                         finished = True
+                    elif event.key in [pygame.K_LSHIFT, pygame.K_RSHIFT]:
+                        pass
                     else:
-                        text += pygame.key.name(event.key)
+                        tempText = pygame.key.name(event.key)
+                        if event.mod & (pygame.KMOD_SHIFT | pygame.KMOD_CAPS):
+                            tempText = tempText.upper()
+                        text += tempText
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     finished = True
         if re.fullmatch(pattern, text):
