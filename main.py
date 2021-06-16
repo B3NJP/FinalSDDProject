@@ -211,7 +211,7 @@ while True:
                                         menuSelectedCombo = combos[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]
                                 if comboMenuLoc[1]+comboMenuSize[1]-100 <= event.pos[1] <= comboMenuLoc[1]+comboMenuSize[1]:
                                     if len(combos) < 10:
-                                        tempName = pygameFunctions.textInput(pattern = '(\w)+')
+                                        tempName = pygameFunctions.textInput(pattern = '((\w)| )+')
                                         combos += [classes.Combo(tempName, [], [])]
                             if menuSelectedCombo:
                                 if comboMenuLoc[0]+200 <= event.pos[0] <= comboMenuLoc[0]+400 and comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
@@ -219,6 +219,9 @@ while True:
                                         menuSelectedCombo.arts += [knownArts[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]]
                                         menuSelectedCombo.dirs += ['N']
                                 if comboMenuLoc[0]+400 <= event.pos[0] <= comboMenuLoc[0]+600: 
+                                    if comboMenuLoc[1] <= event.pos[1] <= comboMenuLoc[1]+100:
+                                        tempName = pygameFunctions.textInput(pattern = '((\w)| )+')
+                                        menuSelectedCombo.name = tempName
                                     if comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
                                         if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(menuSelectedCombo.arts):
                                             menuSelectedCombo.arts.pop(math.floor((event.pos[1] - comboMenuLoc[1]-100)/50))

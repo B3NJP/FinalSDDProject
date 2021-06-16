@@ -2,7 +2,7 @@ import re
 import pygame
 
 def textInput(pattern = '.*'):
-    while True: # Repeat until not re.match(pattern, text)
+    while True: # Repeat until re.match(pattern, text)
         finished = False
         text = ""
         while not finished:
@@ -18,7 +18,7 @@ def textInput(pattern = '.*'):
                         text += pygame.key.name(event.key)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     finished = True
-        if not re.fullmatch(pattern, text):
+        if re.fullmatch(pattern, text):
             break
     return text
     
