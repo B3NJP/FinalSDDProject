@@ -1,6 +1,6 @@
 import math, random, sys, copy
 import pygame
-import classes, functions, exampleArts, drawMap, pygameFunctions, ai
+import classes, functions, exampleArts, drawMap, pygameFunctions, ai, MapGen2
 pygame.init()
 
 # Basic Values
@@ -12,9 +12,26 @@ white = 255, 255, 255
 
 screen = pygame.display.set_mode(screenSize)
 
-grid = [['0']*20]*20
+# Prepares map
+dimensions = (30,30)
+grid = [['X']*dimensions[0] for i in range(0, dimensions[1])]
+rooms = MapGen2.doRooms([5, 10], [[5,8],[5,8]], dimensions)
+MapGen2.drawRooms(rooms, grid)
+connects = [MapGen2.connectRooms(rooms[i], rooms[i+1]) for i in range(0,len(rooms)-1)]
+for i in connects:
+    for j in i:
+        grid[j[1]][j[0]] = '0'
 
-camera = [0,0]
+# Starting Location:
+def getFreeLocation(grid):
+    loc = [math.floor(random.random()*dimensions[0]), math.floor(random.random()*dimensions[1])]
+    while grid[loc[1]][loc[0]] == 'X':
+        loc = [math.floor(random.random()*dimensions[0]), math.floor(random.random()*dimensions[1])]
+    return loc
+
+startLoc = getFreeLocation(grid)
+
+camera = [5-startLoc[0],4-startLoc[1]]
 
 selected = None
 
@@ -110,10 +127,10 @@ def drawComboMenu(highlight):
 font = pygame.font.Font(None, 25)
 
 # Temporary
-Alice = classes.Character('Alice', [28, 27, 9, 7, 11, 6, 8, 9])
-Bill = classes.Character('Bill', [27, 20, 13, 6, 6, 6, 9, 8], script=ai.warrior, image="Assets/Enemies/png/Bandit.png")
+Alice = classes.Character('Alice', [28, 27, 9, 7, 11, 6, 8, 9], loc=startLoc)
+Bill = classes.Character('Bill', [27, 20, 13, 6, 6, 6, 9, 8], loc=getFreeLocation(grid), script=ai.warrior, image="Assets/Enemies/png/Bandit.png")
 
-Alice.loc = [1,3]
+# Alice.loc = [1,3]
 Bill.loc = [6,6]
 units = [Alice, Bill]
 enemies = [Bill]
@@ -211,7 +228,8 @@ while True:
                     
                 # Checks if number (to select combo)
                 if pygame.key.name(event.key) in "1234567890":
-                    chosenCombo = combos[(int(pygame.key.name(event.key))-1)]
+                    if int(pygame.key.name(event.key)) < len(combos):
+                        chosenCombo = combos[(int(pygame.key.name(event.key))-1)]
 
         if event.type == pygame.MOUSEBUTTONDOWN: # Mouse buttons
             if event.button == 1:

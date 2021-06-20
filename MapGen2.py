@@ -1,7 +1,7 @@
 import math, random
 
-dimensions = 50,50
-tempMap = [['X']*50 for i in range(0, 50)]
+# dimensions = 50,50
+# tempMap = [['X']*50 for i in range(0, 50)]
 
 def doRooms(countRange, sizeRanges, dimensions):
     rooms = []
@@ -33,45 +33,45 @@ def drawRooms(rooms, arr):
                 arr[j][k] = '0'
 
 def connectRooms(room1, room2):
-    vertical = True#random.random()>0.5
+    # vertical = True#random.random()>0.5
     locs = []
-    if vertical:
-        x = math.floor(random.random()*room1[2]) + room1[0]
-        y = room1[1]
-        down = False
-        if room1[1] < room2[1]:
-            y += room1[3]-1
-            down = True
-        if not down:
-            finalY = min(room2[1]+math.floor(random.random()*room2[3]),room1[1])
-            while y > finalY:
-                y -= 1
-                locs += [[x, y]]
-        if down:
-            finalY = max(room2[1]+math.floor(random.random()*room2[3]),room1[1]+room1[3])
-            while y < finalY:
-                y += 1
-                locs += [[x, y]]
-        left = False
-        if x > room2[0]:
-            left = True
-        if left:
-            finalX = min(room2[0]+math.floor(random.random()*room2[2]), x)
-            while x > finalX:
-                x -= 1
-                locs += [[x, y]]
-        if not left:
-            finalX = max(room2[0]+math.floor(random.random()*room2[2]), x)
-            while x < finalX:
-                x += 1
-                locs += [[x, y]]
+    # if vertical:
+    x = math.floor(random.random()*room1[2]) + room1[0]
+    y = room1[1]
+    down = False
+    if room1[1] < room2[1]:
+        y += room1[3]-1
+        down = True
+    if not down:
+        finalY = min(room2[1]+math.floor(random.random()*room2[3]),room1[1])
+        while y > finalY:
+            y -= 1
+            locs += [[x, y]]
+    if down:
+        finalY = max(room2[1]+math.floor(random.random()*room2[3]),room1[1]+room1[3])
+        while y < finalY:
+            y += 1
+            locs += [[x, y]]
+    left = False
+    if x > room2[0]:
+        left = True
+    if left:
+        finalX = min(room2[0]+math.floor(random.random()*room2[2]), x)
+        while x > finalX:
+            x -= 1
+            locs += [[x, y]]
+    if not left:
+        finalX = max(room2[0]+math.floor(random.random()*room2[2]), x)
+        while x < finalX:
+            x += 1
+            locs += [[x, y]]
     return locs
-rooms = doRooms([5, 10], [[7,10],[7,10]], dimensions)
-drawRooms(rooms, tempMap)
-#connect1 = connectRooms(rooms[0], rooms[1])
-connects = [connectRooms(rooms[i], rooms[i+1]) for i in range(0,len(rooms)-1)]
-for i in connects:
-    for j in i:
-        tempMap[j[1]][j[0]] = '0'
-for i in tempMap:
-    print(''.join(i))
+# rooms = doRooms([5, 10], [[7,10],[7,10]], dimensions)
+# drawRooms(rooms, tempMap)
+# #connect1 = connectRooms(rooms[0], rooms[1])
+# connects = [connectRooms(rooms[i], rooms[i+1]) for i in range(0,len(rooms)-1)]
+# for i in connects:
+#     for j in i:
+#         tempMap[j[1]][j[0]] = '0'
+# for i in tempMap:
+#     print(''.join(i))
