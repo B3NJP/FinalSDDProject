@@ -116,6 +116,7 @@ Bill = classes.Character('Bill', [27, 20, 13, 6, 6, 6, 9, 8])
 Alice.loc = [1,3]
 Bill.loc = [6,6]
 units = [Alice, Bill]
+enemies = [Bill]
 
 cArt = exampleArts.pierce
 
@@ -130,6 +131,9 @@ chosenCombo = None
 menuSelectedCombo = None#testComboA
 
 knownArts = [exampleArts.pierce, exampleArts.broadSlash, exampleArts.greatPierce]
+
+# Enemy turns
+endTurn = False
 
 while True:
     # Gets events
@@ -255,6 +259,11 @@ while True:
     screen.fill(white) # Makes the screen white
     
     drawMap.draw(grid, units, camera, screen)
+    
+    if endTurn:
+        endTurn = False
+        for i in enemies:
+            i.run()
 
     if dispStatWind and selected:
         statWindow.fill(white)

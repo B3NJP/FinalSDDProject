@@ -16,6 +16,9 @@ class Character:
         self.DEX = stats[6]
         self.AGI = stats[7]
         self.loc = [0,0]
+        
+    def run(self):
+        pass
 
 class Art:
     def __init__(self, name, mods, cc, mv, rg, cost): #Note: cc - crowd control, mv - player movement, rg - range
