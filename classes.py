@@ -1,11 +1,12 @@
 import functions, copy
+import pygame
 
 class Map:
     def __init__(self):
         pass
 
 class Character:
-    def __init__(self, name, stats):
+    def __init__(self, name, stats, loc=[0,0], script=None, alive=True, image=None):
         self.name = name
         self.HP = stats[0]
         self.MP = stats[1]
@@ -15,19 +16,27 @@ class Character:
         self.RES = stats[5]
         self.DEX = stats[6]
         self.AGI = stats[7]
-        self.loc = [0,0]
+        self.loc = loc
+        self.alive = alive
+        self.script = script
+        if image:
+            self.image = pygame.transform.scale(pygame.image.load(image), [100, 100])
+        else:
+            self.image = None
         
-    def run(self):
-        pass
+    def run(self, map, player):
+        if self.script:
+            self.script(self, map, player)
 
 class Art:
-    def __init__(self, name, mods, cc, mv, rg, cost): #Note: cc - crowd control, mv - player movement, rg - range
+    def __init__(self, name, mods, cc, mv, rg, cost, atkType = 'PHY'): #Note: cc - crowd control, mv - player movement, rg - range
         self.name = name
         self.mods = mods
         self.cc = cc
         self.mv = mv
         self.rg = rg
         self.cost = cost
+        self.atkType = atkType
 
 class Combo:
     def __init__(self, name, arts, dirs):

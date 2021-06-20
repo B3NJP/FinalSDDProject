@@ -11,11 +11,11 @@ def damageCalculation(attacker, defender, modifiers, atkType, comboLevel):
     elif atkType == "MAG":
         damage += attacker.INT*finalMods['INT'] - defender.RES*finalMods['RES']
 
-    if comboLevel == 0:
-        if random.random()>((attacker.DEX*finalMods['DEX'] - defender.AGI*finalMods['AGI'])*0.04 + 0.5):
-            print((attacker.DEX*finalMods['DEX'] - defender.AGI*finalMods['AGI'])*0.04 + 0.5)
-            print("Miss")
-            return 0
+    # if comboLevel == 0: # Initially would not miss if combo was over 1
+    if random.random()>((attacker.DEX*finalMods['DEX'] - defender.AGI*finalMods['AGI'])*0.04 + 0.5):
+        print((attacker.DEX*finalMods['DEX'] - defender.AGI*finalMods['AGI'])*0.04 + 0.5)
+        print("Miss")
+        return 0
 
     damage *= finalMods['DMG']
     damage *= 1 + comboLevel/10
@@ -91,7 +91,7 @@ def useArt(attacker, defenderList, art, combo, dir):
 
     defenders = findDefenders(defenderList, locs)
     for i in defenders:
-        dmg = damageCalculation(attacker, i, art.mods, 'PHY', combo)
+        dmg = damageCalculation(attacker, i, art.mods, art.atkType, combo)
         i.HP -= dmg
 
     ccLoc = determineLoc(dir, art.cc)
@@ -113,6 +113,43 @@ def rotate(dirs, dir):
         num = (num+count)%4
         dirs[i] = convertto[num]
     return dirs
+    
+def pathFind(map, loc1, loc2):
+    queue = []
+    totals = []
+    start = loc1
+    end = loc2
+    queue += [[start]]
+    
+    def getNeighbours(loc, map): # Finds the neighbours of the current tile
+        neighs = []
+        if loc[0] > 0:
+            if map[loc[1]][loc[0]-1]=='0':
+                neighs += [[loc[0]-1, loc[1]]]
+        if loc[0] < len(map[loc[1]])-1:
+            if map[loc[1]][loc[0]+1]=='0':
+                neighs += [[loc[0]+1, loc[1]]]
+        if loc[1] > 0:
+            if map[loc[1]-1][loc[0]]=='0':
+                neighs += [[loc[0], loc[1]-1]]
+        if loc[1] < len(map)-1:
+            if map[loc[1]+1][loc[0]]=='0':
+                neighs += [[loc[0], loc[1]+1]]
+        return neighs
+    print(end)
+    print(start)
+    while queue:
+        croute = queue.pop(0)
+        neigh = getNeighbours(croute[-1], map)
+        for i in neigh:
+            if i == end:
+                return croute[1:] # Only tiles after character tile
+            if not i in totals:
+                totals += [i]
+                queue += [croute + [i]]
+    return None
+        
+    
     
 # def useCombo(attacker, defenderList, arts, dirs): Removed in place of having combo in combo class
 #     for i,v in enumerate(arts):

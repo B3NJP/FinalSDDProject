@@ -17,7 +17,10 @@ def textInput(pattern = '.*'):
                     elif event.key in [pygame.K_LSHIFT, pygame.K_RSHIFT]:
                         pass
                     else:
-                        tempText = pygame.key.name(event.key)
+                        if event.key == pygame.K_SPACE:
+                            tempText = ' '
+                        else:
+                            tempText = pygame.key.name(event.key)
                         if event.mod & (pygame.KMOD_SHIFT | pygame.KMOD_CAPS):
                             tempText = tempText.upper()
                         text += tempText

@@ -1,6 +1,6 @@
 import math, random, sys, copy
 import pygame
-import classes, functions, exampleArts, drawMap, pygameFunctions
+import classes, functions, exampleArts, drawMap, pygameFunctions, ai
 pygame.init()
 
 # Basic Values
@@ -12,7 +12,7 @@ white = 255, 255, 255
 
 screen = pygame.display.set_mode(screenSize)
 
-grid = [['0']*8]*8
+grid = [['0']*20]*20
 
 camera = [0,0]
 
@@ -111,7 +111,7 @@ font = pygame.font.Font(None, 25)
 
 # Temporary
 Alice = classes.Character('Alice', [28, 27, 9, 7, 11, 6, 8, 9])
-Bill = classes.Character('Bill', [27, 20, 13, 6, 6, 6, 9, 8])
+Bill = classes.Character('Bill', [27, 20, 13, 6, 6, 6, 9, 8], script=ai.warrior, image="Assets/Enemies/png/Bandit.png")
 
 Alice.loc = [1,3]
 Bill.loc = [6,6]
@@ -130,7 +130,8 @@ combos = [testComboA, testComboB]
 chosenCombo = None
 menuSelectedCombo = None#testComboA
 
-knownArts = [exampleArts.pierce, exampleArts.broadSlash, exampleArts.greatPierce]
+# knownArts = [exampleArts.pierce, exampleArts.broadSlash, exampleArts.greatPierce]
+knownArts = exampleArts.allArts
 
 # Enemy turns
 endTurn = False
@@ -158,19 +159,23 @@ while True:
 
                 if event.key == pygame.K_w:
                     Alice.loc[1] -= 1
+                    endTurn = True
                 if event.key == pygame.K_a:
                     Alice.loc[0] -= 1
+                    endTurn = True
                 if event.key == pygame.K_s:
                     Alice.loc[1] += 1
+                    endTurn = True
                 if event.key == pygame.K_d:
                     Alice.loc[0] += 1
+                    endTurn = True
 
-                if event.key == pygame.K_p:
-                    cArt = exampleArts.pierce
-                if event.key == pygame.K_g:
-                    cArt = exampleArts.greatPierce
-                if event.key == pygame.K_b:
-                    cArt = exampleArts.broadSlash
+                # if event.key == pygame.K_p:
+                #     cArt = exampleArts.pierce
+                # if event.key == pygame.K_g:
+                #     cArt = exampleArts.greatPierce
+                # if event.key == pygame.K_b:
+                #     cArt = exampleArts.broadSlash
 
                 # if event.key == pygame.K_u:
                 #     functions.useArt(Alice, units, cArt, 0, 'U')
@@ -183,12 +188,16 @@ while True:
                 if chosenCombo:
                     if event.key == pygame.K_u:
                         chosenCombo.run(Alice, units, 'N')
+                        endTurn = True
                     if event.key == pygame.K_k:
                         chosenCombo.run(Alice, units, 'E')
+                        endTurn = True
                     if event.key == pygame.K_j:
                         chosenCombo.run(Alice, units, 'S')
+                        endTurn = True
                     if event.key == pygame.K_h:
                         chosenCombo.run(Alice, units, 'W')
+                        endTurn = True
 
                 # if event.key == pygame.K_z:
                 #     testComboA.run(Alice, units, testDirsA)
@@ -262,8 +271,16 @@ while True:
     
     if endTurn:
         endTurn = False
+        toRemove = []
         for i in enemies:
-            i.run()
+            if i.HP > 0:
+                i.run(grid, Alice)
+            else:
+                i.alive = False
+                toRemove += [i]
+        for i in toRemove:
+            units.remove(i)
+            enemies.remove(i)
 
     if dispStatWind and selected:
         statWindow.fill(white)
