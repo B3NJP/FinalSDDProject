@@ -163,6 +163,30 @@ knownArts = exampleArts.allArts
 # Enemy turns
 endTurn = False
 
+def newLevel():
+    # Prepares variables
+    global grid, player, camera, enemies, units
+    
+    # Prepares Map
+    grid = [['X']*dimensions[0] for i in range(0, dimensions[1])]
+    rooms = MapGen2.doRooms([5, 10], [[5,8],[5,8]], dimensions)
+    MapGen2.drawRooms(rooms, grid)
+    connects = [MapGen2.connectRooms(rooms[i], rooms[i+1]) for i in range(0,len(rooms)-1)]
+    for i in connects:
+        for j in i:
+            grid[j[1]][j[0]] = '0'
+        
+    # Prepares Player    
+    player.HP = player.maxHP
+    player.loc = getFreeLocation(grid)
+
+    camera = [5-player.loc[0],4-player.loc[1]]
+    
+    # Prepares Enemies
+    enemies = [makeEnemy(exampleEnemies.bandit, grid) for i in range(0, 5)]
+    units += enemies
+    
+
 while True:
     # Gets events
     for event in pygame.event.get(): # Note consider moving these into functions in another file
@@ -324,6 +348,8 @@ while True:
         for i in toRemove:
             units.remove(i)
             enemies.remove(i)
+        if len(enemies) == 0:
+            newLevel()
 
     if dispStatWind and selected:
         statWindow.fill(white)
