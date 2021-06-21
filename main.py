@@ -317,6 +317,12 @@ while True:
         statWindow.blit(font.render(selected.name, True, black), [10, 10])
         statWindow.blit(font.render('HP: ' + str(selected.HP), True, black), [10, 25])
         statWindow.blit(font.render('MP: ' + str(selected.MP), True, black), [10, 40])
+        statWindow.blit(font.render('ATK: ' + str(selected.ATK), True, black), [10, 55])
+        statWindow.blit(font.render('DEF: ' + str(selected.DEF), True, black), [10, 70])
+        statWindow.blit(font.render('INT: ' + str(selected.INT), True, black), [10, 85])
+        statWindow.blit(font.render('RES: ' + str(selected.RES), True, black), [10, 100])
+        statWindow.blit(font.render('DEX: ' + str(selected.DEX), True, black), [10, 115])
+        statWindow.blit(font.render('AGI: ' + str(selected.AGI), True, black), [10, 130])
         screen.blit(statWindow, [0, screenSize[1]-statWindowSize[1]])
         
     if dispComboWind:
