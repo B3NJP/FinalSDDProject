@@ -147,7 +147,8 @@ def pathFind(map, loc1, loc2):
                 queue += [croute + [i]]
     return None
         
-    
+def compareCosts(player, combo):
+    return combo.cost() <= player.artPoints()
     
 # def useCombo(attacker, defenderList, arts, dirs): Removed in place of having combo in combo class
 #     for i,v in enumerate(arts):

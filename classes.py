@@ -1,4 +1,5 @@
-import functions, copy
+import math, copy
+import functions
 import pygame
 
 class Map:
@@ -30,6 +31,9 @@ class Character:
     def run(self, map, player):
         if self.script:
             self.script(self, map, player)
+            
+    def artPoints(self):
+        return math.floor(self.DEX*1.5 + self.AGI*0.75)
 
 class Art:
     def __init__(self, name, mods, cc, mv, rg, cost, atkType = 'PHY'): #Note: cc - crowd control, mv - player movement, rg - range
@@ -49,6 +53,13 @@ class Combo:
         self.dirs = dirs
         
     def run(self, attacker, defenderList, rotation):
-        cdirs = functions.rotate(copy.deepcopy(self.dirs), rotation)
-        for i,v in enumerate(self.arts):
-            functions.useArt(attacker, defenderList, v, i, cdirs[i])
+        if functions.compareCosts(attacker, self):
+            cdirs = functions.rotate(copy.deepcopy(self.dirs), rotation)
+            for i,v in enumerate(self.arts):
+                functions.useArt(attacker, defenderList, v, i, cdirs[i])
+            
+    def cost(self):
+        total = 0
+        for i in self.arts:
+            total += i.cost
+        return total

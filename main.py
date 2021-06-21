@@ -110,6 +110,7 @@ def drawComboMenu(highlight):
     # Shows the selected combo
     if highlight:
         comboMenu.blit(menuFont.render(highlight.name, True, black), [(200-menuFont.size(highlight.name)[0])/2+400, (100-menuFont.size(highlight.name)[1])/2])
+        pygameFunctions.drawButton(comboMenu, str(highlight.cost()) + "/" + str(player.artPoints()), menuFont, [600, 0], [100, 100], white, black)
         for i in range(0, len(highlight.arts)):
             pygameFunctions.drawButton(comboMenu, highlight.arts[i].name, menuFont, [400, 100+i*50], [200, 50], white, black)
             pygameFunctions.drawButton(comboMenu, highlight.dirs[i], menuFont, [600, 100+i*50], [100, 50], white, black)
