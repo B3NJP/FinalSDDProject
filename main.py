@@ -33,7 +33,7 @@ startLoc = getFreeLocation(grid)
 
 camera = [5-startLoc[0],4-startLoc[1]]
 
-selected = None
+# selected = None
 
 
 # Stat Window
@@ -128,6 +128,7 @@ font = pygame.font.Font(None, 25)
 
 # Temporary -- Also (self, name, stats, loc=[0,0], script=None, alive=True, image=None) -- HP, MP, ATK, DEF, INT, RES, DEX, AGI
 Alice = classes.Character('Alice', [28, 27, 9, 7, 11, 6, 8, 9], loc=startLoc)
+selected = Alice
 # Bill = classes.Character('Bill', [27, 20, 13, 6, 6, 6, 9, 8], loc=getFreeLocation(grid), script=ai.warrior, image="Assets/Enemies/png/Bandit.png")
 
 # Alice.loc = [1,3]
