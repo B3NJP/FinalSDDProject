@@ -210,6 +210,7 @@ while True:
                 dispPauseMenu = not dispPauseMenu
                 
             if not dispPauseMenu:
+                # Camera Scroll
                 if event.key == pygame.K_UP:
                     camera[1] += .5
                 if event.key == pygame.K_RIGHT:
@@ -218,19 +219,24 @@ while True:
                     camera[1] -= .5
                 if event.key == pygame.K_LEFT:
                     camera[0] += .5
-
+                
+                # Player Movement
                 if event.key == pygame.K_w:
-                    player.loc[1] -= 1
-                    endTurn = True
+                    if grid[player.loc[1]-1][player.loc[0]] == '0':
+                        player.loc[1] -= 1
+                        endTurn = True
                 if event.key == pygame.K_a:
-                    player.loc[0] -= 1
-                    endTurn = True
+                    if grid[player.loc[1]][player.loc[0]-1] == '0':
+                        player.loc[0] -= 1
+                        endTurn = True
                 if event.key == pygame.K_s:
-                    player.loc[1] += 1
-                    endTurn = True
+                    if grid[player.loc[1]+1][player.loc[0]] == '0':
+                        player.loc[1] += 1
+                        endTurn = True
                 if event.key == pygame.K_d:
-                    player.loc[0] += 1
-                    endTurn = True
+                    if grid[player.loc[1]][player.loc[0]+1] == '0':
+                        player.loc[0] += 1
+                        endTurn = True
 
                 # if event.key == pygame.K_p:
                 #     cArt = exampleArts.pierce
