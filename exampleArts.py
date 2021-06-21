@@ -13,6 +13,6 @@ arcSlash = classes.Art('Arc Slash', [['ATK', 1.5]], 'F', '', ['F', 'FF', 'FFL', 
 
 gale = classes.Art('Gale', [['ATK', 1.2], ['DEF', 0.75]], 'F', 'FFF', ['FFF', 'FFFF'], 25)
 
-runeBlade = classes.Art('Rune Blade', [['INT', 1.5]], 'R', 'F', ['F', 'FR'], 20)
+runeBlade = classes.Art('Rune Blade', [['INT', 1.5]], 'R', 'F', ['F', 'FR'], 20, atkType='MAG')
 
 allArts = [pierce, broadSlash, greatPierce, autumn, arcSlash, gale, runeBlade]
