@@ -359,6 +359,13 @@ while True:
         endTurn = False
         toRemove = []
         for i in enemies:
+            # Kills enemies outside of space
+            if i.loc[0] < 0 or i.loc[0] >= len(grid[i.loc[1]]) or i.loc[1] < 0 or i.loc[1] >= len(grid):
+                i.HP = 0
+            if grid[i.loc[1]][i.loc[0]] == 'X':
+                i.HP = 0
+            
+            # If it has HP run else die
             if i.HP > 0:
                 i.run(grid, player)
             else:
