@@ -137,20 +137,27 @@ def makeEnemy(eType, grid):
 enemies = [makeEnemy(exampleEnemies.bandit, grid) for i in range(0, 5)]
 units += enemies
 
-cArt = exampleArts.pierce
+# testDirsA = ['N', 'N']
+# testComboA = classes.Combo('Test1', [exampleArts.pierce, exampleArts.greatPierce], testDirsA)
+# 
+# testDirsB = ['N', 'E', 'E', 'S', 'S', 'W', 'W', 'N']
+# testComboB = classes.Combo('Test2', [exampleArts.broadSlash]*8, testDirsB)
 
-testDirsA = ['N', 'N']
-testComboA = classes.Combo('Test1', [exampleArts.pierce, exampleArts.greatPierce], testDirsA)
-
-testDirsB = ['N', 'E', 'E', 'S', 'S', 'W', 'W', 'N']
-testComboB = classes.Combo('Test2', [exampleArts.broadSlash]*8, testDirsB)
-
-combos = [testComboA, testComboB]
+# combos = [testComboA, testComboB]
 chosenCombo = None
 menuSelectedCombo = None#testComboA
 
 # knownArts = [exampleArts.pierce, exampleArts.broadSlash, exampleArts.greatPierce]
-knownArts = exampleArts.allArts
+# knownArts = exampleArts.allArts
+
+# Changed initial arts
+knownArts = [exampleArts.pierce, exampleArts.broadSlash]
+unknownArts = copy.copy(exampleArts.allArts)
+for i in knownArts:
+    unknownArts.remove(i)
+
+pierceSlash = classes.Combo("Pierce Slash", [exampleArts.pierce, exampleArts.broadSlash], ['N', 'N'])
+combos = [pierceSlash]
 
 # Enemy turns
 endTurn = False
