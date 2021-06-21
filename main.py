@@ -1,6 +1,6 @@
 import math, random, sys, copy
 import pygame
-import classes, functions, exampleArts, drawMap, pygameFunctions, ai, MapGen2
+import classes, functions, exampleArts, drawMap, pygameFunctions, ai, MapGen2, exampleEnemies
 pygame.init()
 
 # Basic Values
@@ -126,14 +126,23 @@ def drawComboMenu(highlight):
 # Text Font
 font = pygame.font.Font(None, 25)
 
-# Temporary
+# Temporary -- Also (self, name, stats, loc=[0,0], script=None, alive=True, image=None) -- HP, MP, ATK, DEF, INT, RES, DEX, AGI
 Alice = classes.Character('Alice', [28, 27, 9, 7, 11, 6, 8, 9], loc=startLoc)
-Bill = classes.Character('Bill', [27, 20, 13, 6, 6, 6, 9, 8], loc=getFreeLocation(grid), script=ai.warrior, image="Assets/Enemies/png/Bandit.png")
+# Bill = classes.Character('Bill', [27, 20, 13, 6, 6, 6, 9, 8], loc=getFreeLocation(grid), script=ai.warrior, image="Assets/Enemies/png/Bandit.png")
 
 # Alice.loc = [1,3]
-Bill.loc = [6,6]
-units = [Alice, Bill]
-enemies = [Bill]
+# Bill.loc = [6,6]
+units = [Alice]#[Alice, Bill]
+# enemies = [Bill]
+
+# Make Enemies
+def makeEnemy(eType, grid):
+    c = eType()
+    c.loc = getFreeLocation(grid)
+    return c
+
+enemies = [makeEnemy(exampleEnemies.bandit, grid) for i in range(0, 5)]
+units += enemies
 
 cArt = exampleArts.pierce
 
@@ -204,16 +213,16 @@ while True:
                 #     functions.useArt(Alice, units, cArt, 0, 'R')
                 if chosenCombo:
                     if event.key == pygame.K_u:
-                        chosenCombo.run(Alice, units, 'N')
+                        chosenCombo.run(Alice, enemies, 'N')
                         endTurn = True
                     if event.key == pygame.K_k:
-                        chosenCombo.run(Alice, units, 'E')
+                        chosenCombo.run(Alice, enemies, 'E')
                         endTurn = True
                     if event.key == pygame.K_j:
-                        chosenCombo.run(Alice, units, 'S')
+                        chosenCombo.run(Alice, enemies, 'S')
                         endTurn = True
                     if event.key == pygame.K_h:
-                        chosenCombo.run(Alice, units, 'W')
+                        chosenCombo.run(Alice, enemies, 'W')
                         endTurn = True
 
                 # if event.key == pygame.K_z:
@@ -284,6 +293,7 @@ while True:
                         
                         
     screen.fill(white) # Makes the screen white
+    # screen.fill(black) # Makes the screen black
     
     drawMap.draw(grid, units, camera, screen)
     
