@@ -8,6 +8,7 @@ box = [100, 100]
 screenSize = [1000, 800]
 black = 0, 0, 0
 blue = 0, 0, 255
+red = 255, 0, 0
 white = 255, 255, 255
 
 screen = pygame.display.set_mode(screenSize)
@@ -110,7 +111,7 @@ def drawComboMenu(highlight):
     # Shows the selected combo
     if highlight:
         comboMenu.blit(menuFont.render(highlight.name, True, black), [(200-menuFont.size(highlight.name)[0])/2+400, (100-menuFont.size(highlight.name)[1])/2])
-        pygameFunctions.drawButton(comboMenu, str(highlight.cost()) + "/" + str(player.artPoints()), menuFont, [600, 0], [100, 100], white, black)
+        pygameFunctions.drawButton(comboMenu, str(highlight.cost()) + "/" + str(player.artPoints()), menuFont, [600, 0], [100, 100], white, black if (player.artPoints() >= highlight.cost()) else red)
         for i in range(0, len(highlight.arts)):
             pygameFunctions.drawButton(comboMenu, highlight.arts[i].name, menuFont, [400, 100+i*50], [200, 50], white, black)
             pygameFunctions.drawButton(comboMenu, highlight.dirs[i], menuFont, [600, 100+i*50], [100, 50], white, black)
