@@ -20,4 +20,4 @@ def draw(map, units, camera, screen):
                 if i.image:
                     screen.blit(i.image, [(i.loc[0]+camera[0])*100, (i.loc[1]+camera[1])*100])
                 else:
-                    pygame.draw.circle(screen, black, [(i.loc[0]+camera[0])*100+50, (i.loc[1]+camera[1])*100+50], 40, 1) # Draws units
+                    pygame.draw.circle(screen, black, [(i.loc[0]+camera[0])*100+50, (i.loc[1]+camera[1])*100+50], 40, 1) # Draws circle if no image

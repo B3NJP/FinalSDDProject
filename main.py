@@ -187,7 +187,7 @@ def newLevel():
     
     # Prepares Enemies
     enemies = [makeEnemy(exampleEnemies.bandit, grid) for i in range(0, 5)]
-    units += enemies
+    units = [player] + enemies
     
 def restart():
     global knownArts, unknownArts
