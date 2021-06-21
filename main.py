@@ -364,7 +364,7 @@ while True:
             # Kills enemies outside of space
             if i.loc[0] < 0 or i.loc[0] >= len(grid[i.loc[1]]) or i.loc[1] < 0 or i.loc[1] >= len(grid):
                 i.HP = 0
-            if grid[i.loc[1]][i.loc[0]] == 'X':
+            elif grid[i.loc[1]][i.loc[0]] == 'X':
                 i.HP = 0
             
             # If it has HP run else die
@@ -382,6 +382,10 @@ while True:
         for i in toRemove:
             units.remove(i)
             enemies.remove(i)
+        if player.loc[0] < 0 or player.loc[0] >= len(grid[player.loc[1]]) or player.loc[1] < 0 or player.loc[1] >= len(grid):
+            player.HP = 0
+        elif grid[player.loc[1]][player.loc[0]] == 'X':
+            player.HP = 0
         if player.HP <= 0:
             restart()
         if len(enemies) == 0:
