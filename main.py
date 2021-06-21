@@ -127,7 +127,7 @@ def drawComboMenu(highlight):
 font = pygame.font.Font(None, 25)
 
 # Temporary -- Also (self, name, stats, loc=[0,0], script=None, alive=True, image=None) -- HP, MP, ATK, DEF, INT, RES, DEX, AGI
-player = classes.Character('Player', [28, 27, 9, 7, 11, 6, 8, 9], loc=startLoc)
+player = classes.Character('Player', [28, 27, 20, 17, 19, 16, 22, 17], loc=startLoc)
 selected = player
 # Bill = classes.Character('Bill', [27, 20, 13, 6, 6, 6, 9, 8], loc=getFreeLocation(grid), script=ai.warrior, image="Assets/Enemies/png/Bandit.png")
 
