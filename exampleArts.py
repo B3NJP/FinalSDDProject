@@ -9,10 +9,16 @@ greatPierce = classes.Art('Great Pierce', [['DEF', 0.25], ['DEX', 1.2]], 'FF', '
 
 autumn = classes.Art('Autumn Leaf', [['DEF', 0.5], ['DEX', 1.2]], 'F', 'FFFF', ['F', 'FL', 'FR', 'FF', 'FFL', 'FFR'], 20)
 
-arcSlash = classes.Art('Arc Slash', [['ATK', 1.5]], 'F', '', ['F', 'FF', 'FFL', 'FFR', 'FFF', 'FFFF', 'FFFFF'], 30)
+arcSlash = classes.Art('Arc Slash', [['ATK', 2]], 'F', '', ['F', 'FF', 'FFL', 'FFR', 'FFF', 'FFFF', 'FFFFF'], 30)
 
 gale = classes.Art('Gale', [['ATK', 1.2], ['DEF', 0.75]], 'F', 'FFF', ['FFF', 'FFFF'], 25)
 
 runeBlade = classes.Art('Rune Blade', [['INT', 1.5]], 'R', 'F', ['F', 'FR'], 20, atkType='MAG')
 
-allArts = [pierce, broadSlash, greatPierce, autumn, arcSlash, gale, runeBlade]
+pierceStep = classes.Art('Pierce Step', [['DEF', 0.5], ['DEX', 1.1]], '', 'F', ['FF'], 20)
+
+leftSlash = classes.Art('Left Slash', [['ATK', 1.1]], 'L', 'F', ['FL'], 20)
+
+pullSlash = classes.Art('Pull Slash', [['AGI', 0.5]], 'B', '', ['FF'], 20)
+
+allArts = [pierce, broadSlash, greatPierce, autumn, arcSlash, gale, runeBlade, pierceStep, leftSlash, pullSlash]

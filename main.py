@@ -47,7 +47,6 @@ dispStatWind = False
 # Combo Window
 comboWindowSize = [300, 400]
 comboWindow = pygame.Surface(comboWindowSize)
-page = 0
 comboWindow.set_alpha(200)
 dispComboWind = False
 
@@ -72,6 +71,7 @@ comboMenuSize = [700, 600]
 comboMenuLoc = [150, 100]
 comboMenu = pygame.Surface(comboMenuSize)
 arrowFont = pygame.font.Font(None, 60)
+artPage = 0
 def drawComboMenu(highlight):
     comboMenu.fill(white)
     pygame.draw.rect(comboMenu, black, [0, 0] + comboMenuSize, 10)
@@ -103,10 +103,10 @@ def drawComboMenu(highlight):
         
     # List Known Arts
     comboMenu.blit(menuFont.render("Arts:", True, black), [(200-menuFont.size("Arts:")[0])/2+200, (100-menuFont.size("Arts:")[1])/2])
-    for i in range(0, min(len(knownArts),10)):
+    for i in range(0, len(knownArts[artPage*8:artPage*8+8])):
         # text = str((i+1)%10) + ": " + knownArts[i].name # Make adjustment for longer art names
         # comboMenu.blit(menuFont.render(text, True, black), [220, 100+i*40])
-        pygameFunctions.drawButton(comboMenu, knownArts[i].name, menuFont, [200, 100+i*50], [200, 50], white, black)
+        pygameFunctions.drawButton(comboMenu, knownArts[i+artPage*8].name, menuFont, [200, 100+i*50], [200, 50], white, black)
         
     # Shows the selected combo
     if highlight:
@@ -200,6 +200,16 @@ def restart():
     newLevel()
 
 pygameFunctions.openingMenu(screenSize, screen)
+
+# Developer Console
+def console():
+    global knownArts, unknownArts
+    command = input()
+    if command == 'art':
+        knownArts += unknownArts
+        unknownArts = []
+    knownArts.sort(key=lambda n: n.name) # Consider making a learn arts function
+        
 while True:
     # Gets events
     for event in pygame.event.get(): # Note consider moving these into functions in another file
@@ -221,6 +231,10 @@ while True:
                     camera[1] -= .5
                 if event.key == pygame.K_LEFT:
                     camera[0] += .5
+                
+                # Developer Console
+                if event.key == pygame.K_c:
+                    console()
                 
                 # Player Movement
                 if event.key == pygame.K_w:
@@ -292,7 +306,7 @@ while True:
             if event.button == 1:
                 if dispPauseMenu:
                     if dispComboMenu:
-                        if comboMenuLoc[0] <= event.pos[0] <= comboMenuLoc[0]+comboMenuSize[0]:
+                        if comboMenuLoc[0] <= event.pos[0] <= comboMenuLoc[0]+comboMenuSize[0] and comboMenuLoc[1] <= event.pos[1] <= comboMenuLoc[1]+comboMenuSize[1]:
                             if comboMenuLoc[0] <= event.pos[0] <= comboMenuLoc[0]+200:
                                 # Select Combo
                                 if comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
@@ -304,12 +318,23 @@ while True:
                                     if len(combos) < 10:
                                         tempName = pygameFunctions.textInput(pattern = '((\w)| )+')
                                         combos += [classes.Combo(tempName, [], [])]
+                            
+                            # Changes Art Page
+                            if comboMenuLoc[0]+200 <= event.pos[0] <= comboMenuLoc[0]+400 and comboMenuLoc[1]+comboMenuSize[1]-100 <= event.pos[1] <= comboMenuLoc[1]+comboMenuSize[1]:
+                                if comboMenuLoc[0]+200 <= event.pos[0] <= comboMenuLoc[0]+300 and len(knownArts) > 8:
+                                    artPage -= 1
+                                    artPage %= math.ceil(len(knownArts)/8)
+                                elif comboMenuLoc[0]+300 <= event.pos[0] <= comboMenuLoc[0]+400 and len(knownArts) > 8:
+                                    artPage += 1
+                                    artPage %= math.ceil(len(knownArts)/8)
+                                    
                             if menuSelectedCombo:
                                 # Add Art
-                                if comboMenuLoc[0]+200 <= event.pos[0] <= comboMenuLoc[0]+400 and comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
-                                    if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(knownArts):
-                                        menuSelectedCombo.arts += [knownArts[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]]
-                                        menuSelectedCombo.dirs += ['N']
+                                if comboMenuLoc[0]+200 <= event.pos[0] <= comboMenuLoc[0]+400:
+                                    if comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
+                                        if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(knownArts[artPage*8:artPage*8+8]):
+                                            menuSelectedCombo.arts += [knownArts[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]]
+                                            menuSelectedCombo.dirs += ['N']
                                         
                                 if comboMenuLoc[0]+400 <= event.pos[0] <= comboMenuLoc[0]+600: 
                                     # Rename Combo
