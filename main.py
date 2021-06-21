@@ -318,6 +318,8 @@ while True:
                 i.run(grid, player)
             else:
                 i.alive = False
+                if selected == i:
+                    selected = player
                 toRemove += [i]
         for i in toRemove:
             units.remove(i)
