@@ -155,6 +155,7 @@ knownArts = [exampleArts.pierce, exampleArts.broadSlash]
 unknownArts = copy.copy(exampleArts.allArts)
 for i in knownArts:
     unknownArts.remove(i)
+random.shuffle(unknownArts)
 
 pierceSlash = classes.Combo("Pierce Slash", [exampleArts.pierce, exampleArts.broadSlash], ['N', 'N'])
 combos = [pierceSlash]
@@ -344,6 +345,9 @@ while True:
                 i.alive = False
                 if selected == i:
                     selected = player
+                if unknownArts:
+                    if random.random() > 0.5: # 50% Chance of aquiring a new art
+                        knownArts += [unknownArts.pop()]
                 toRemove += [i]
         for i in toRemove:
             units.remove(i)

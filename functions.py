@@ -136,8 +136,6 @@ def pathFind(map, loc1, loc2):
             if map[loc[1]+1][loc[0]]=='0':
                 neighs += [[loc[0], loc[1]+1]]
         return neighs
-    print(end)
-    print(start)
     while queue:
         croute = queue.pop(0)
         neigh = getNeighbours(croute[-1], map)
