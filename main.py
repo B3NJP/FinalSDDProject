@@ -127,13 +127,13 @@ def drawComboMenu(highlight):
 font = pygame.font.Font(None, 25)
 
 # Temporary -- Also (self, name, stats, loc=[0,0], script=None, alive=True, image=None) -- HP, MP, ATK, DEF, INT, RES, DEX, AGI
-Alice = classes.Character('Alice', [28, 27, 9, 7, 11, 6, 8, 9], loc=startLoc)
-selected = Alice
+player = classes.Character('Player', [28, 27, 9, 7, 11, 6, 8, 9], loc=startLoc)
+selected = player
 # Bill = classes.Character('Bill', [27, 20, 13, 6, 6, 6, 9, 8], loc=getFreeLocation(grid), script=ai.warrior, image="Assets/Enemies/png/Bandit.png")
 
-# Alice.loc = [1,3]
+# player.loc = [1,3]
 # Bill.loc = [6,6]
-units = [Alice]#[Alice, Bill]
+units = [player]#[player, Bill]
 # enemies = [Bill]
 
 # Make Enemies
@@ -185,16 +185,16 @@ while True:
                     camera[0] += .5
 
                 if event.key == pygame.K_w:
-                    Alice.loc[1] -= 1
+                    player.loc[1] -= 1
                     endTurn = True
                 if event.key == pygame.K_a:
-                    Alice.loc[0] -= 1
+                    player.loc[0] -= 1
                     endTurn = True
                 if event.key == pygame.K_s:
-                    Alice.loc[1] += 1
+                    player.loc[1] += 1
                     endTurn = True
                 if event.key == pygame.K_d:
-                    Alice.loc[0] += 1
+                    player.loc[0] += 1
                     endTurn = True
 
                 # if event.key == pygame.K_p:
@@ -205,31 +205,31 @@ while True:
                 #     cArt = exampleArts.broadSlash
 
                 # if event.key == pygame.K_u:
-                #     functions.useArt(Alice, units, cArt, 0, 'U')
+                #     functions.useArt(player, units, cArt, 0, 'U')
                 # if event.key == pygame.K_h:
-                #     functions.useArt(Alice, units, cArt, 0, 'L')
+                #     functions.useArt(player, units, cArt, 0, 'L')
                 # if event.key == pygame.K_j:
-                #     functions.useArt(Alice, units, cArt, 0, 'D')
+                #     functions.useArt(player, units, cArt, 0, 'D')
                 # if event.key == pygame.K_k:
-                #     functions.useArt(Alice, units, cArt, 0, 'R')
+                #     functions.useArt(player, units, cArt, 0, 'R')
                 if chosenCombo:
                     if event.key == pygame.K_u:
-                        chosenCombo.run(Alice, enemies, 'N')
+                        chosenCombo.run(player, enemies, 'N')
                         endTurn = True
                     if event.key == pygame.K_k:
-                        chosenCombo.run(Alice, enemies, 'E')
+                        chosenCombo.run(player, enemies, 'E')
                         endTurn = True
                     if event.key == pygame.K_j:
-                        chosenCombo.run(Alice, enemies, 'S')
+                        chosenCombo.run(player, enemies, 'S')
                         endTurn = True
                     if event.key == pygame.K_h:
-                        chosenCombo.run(Alice, enemies, 'W')
+                        chosenCombo.run(player, enemies, 'W')
                         endTurn = True
 
                 # if event.key == pygame.K_z:
-                #     testComboA.run(Alice, units, testDirsA)
+                #     testComboA.run(player, units, testDirsA)
                 # if event.key == pygame.K_x:
-                #     testComboB.run(Alice, units, testDirsB)
+                #     testComboB.run(player, units, testDirsB)
 
                 if event.key == pygame.K_m:
                     dispStatWind = not dispStatWind
@@ -237,8 +237,8 @@ while True:
                     dispComboWind = not dispComboWind
                     
                 # Checks if number (to select combo)
-                if pygame.key.name(event.key) in "1234567890":
-                    if int(pygame.key.name(event.key)) < len(combos):
+                if pygame.key.name(event.key) in "123456789":
+                    if int(pygame.key.name(event.key)) <= len(combos):
                         chosenCombo = combos[(int(pygame.key.name(event.key))-1)]
 
         if event.type == pygame.MOUSEBUTTONDOWN: # Mouse buttons
@@ -247,29 +247,41 @@ while True:
                     if dispComboMenu:
                         if comboMenuLoc[0] <= event.pos[0] <= comboMenuLoc[0]+comboMenuSize[0]:
                             if comboMenuLoc[0] <= event.pos[0] <= comboMenuLoc[0]+200:
+                                # Select Combo
                                 if comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
                                     if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(combos):
                                         menuSelectedCombo = combos[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]
+                                        
+                                # New Combo
                                 if comboMenuLoc[1]+comboMenuSize[1]-100 <= event.pos[1] <= comboMenuLoc[1]+comboMenuSize[1]:
                                     if len(combos) < 10:
                                         tempName = pygameFunctions.textInput(pattern = '((\w)| )+')
                                         combos += [classes.Combo(tempName, [], [])]
                             if menuSelectedCombo:
+                                # Add Art
                                 if comboMenuLoc[0]+200 <= event.pos[0] <= comboMenuLoc[0]+400 and comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
                                     if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(knownArts):
                                         menuSelectedCombo.arts += [knownArts[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]]
                                         menuSelectedCombo.dirs += ['N']
+                                        
                                 if comboMenuLoc[0]+400 <= event.pos[0] <= comboMenuLoc[0]+600: 
+                                    # Rename Combo
                                     if comboMenuLoc[1] <= event.pos[1] <= comboMenuLoc[1]+100:
                                         tempName = pygameFunctions.textInput(pattern = '((\w)| )+')
                                         menuSelectedCombo.name = tempName
+                                        
+                                    # Remove Art
                                     if comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
                                         if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(menuSelectedCombo.arts):
                                             menuSelectedCombo.arts.pop(math.floor((event.pos[1] - comboMenuLoc[1]-100)/50))
                                             menuSelectedCombo.dirs.pop(math.floor((event.pos[1] - comboMenuLoc[1]-100)/50))
+                                            
+                                    # Delete Combo
                                     if comboMenuLoc[1]+comboMenuSize[1]-100 <= event.pos[1] <= comboMenuLoc[1]+comboMenuSize[1]:
                                         combos.remove(menuSelectedCombo)
                                         menuSelectedCombo = None
+                                        
+                                # Change Art Direction
                                 if comboMenuLoc[0]+600 <= event.pos[0] <= comboMenuLoc[0]+700 and comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
                                     if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(menuSelectedCombo.dirs):
                                         menuSelectedCombo.dirs[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)] = functions.rotate([copy.deepcopy(menuSelectedCombo.dirs)[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]], 'E')[0]
@@ -303,7 +315,7 @@ while True:
         toRemove = []
         for i in enemies:
             if i.HP > 0:
-                i.run(grid, Alice)
+                i.run(grid, player)
             else:
                 i.alive = False
                 toRemove += [i]
