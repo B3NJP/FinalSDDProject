@@ -187,6 +187,15 @@ def newLevel():
     enemies = [makeEnemy(exampleEnemies.bandit, grid) for i in range(0, 5)]
     units += enemies
     
+def restart():
+    global knownArts, unknownArts
+    knownArts = [exampleArts.pierce, exampleArts.broadSlash]
+    unknownArts = copy.copy(exampleArts.allArts)
+    for i in knownArts:
+        unknownArts.remove(i)
+    random.shuffle(unknownArts)
+    knownArts.sort(key=lambda n: n.name)
+    newLevel()
 
 pygameFunctions.openingMenu(screenSize, screen)
 while True:
@@ -354,6 +363,8 @@ while True:
         for i in toRemove:
             units.remove(i)
             enemies.remove(i)
+        if player.HP <= 0:
+            restart()
         if len(enemies) == 0:
             newLevel()
 
