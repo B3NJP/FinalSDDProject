@@ -20,6 +20,7 @@ class Character:
         self.alive = alive
         self.script = script
         self.maxHP = stats[0]
+        self.maxMP = stats[1]
         
         if image:
             self.image = pygame.transform.scale(pygame.image.load(image), [100, 100])
