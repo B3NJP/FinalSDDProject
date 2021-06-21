@@ -222,21 +222,25 @@ while True:
                 
                 # Player Movement
                 if event.key == pygame.K_w:
-                    if grid[player.loc[1]-1][player.loc[0]] == '0':
-                        player.loc[1] -= 1
-                        endTurn = True
+                    if player.loc[1] > 0:
+                        if grid[player.loc[1]-1][player.loc[0]] == '0':
+                            player.loc[1] -= 1
+                            endTurn = True
                 if event.key == pygame.K_a:
-                    if grid[player.loc[1]][player.loc[0]-1] == '0':
-                        player.loc[0] -= 1
-                        endTurn = True
+                    if player.loc[0] > 0:
+                        if grid[player.loc[1]][player.loc[0]-1] == '0':
+                            player.loc[0] -= 1
+                            endTurn = True
                 if event.key == pygame.K_s:
-                    if grid[player.loc[1]+1][player.loc[0]] == '0':
-                        player.loc[1] += 1
-                        endTurn = True
+                    if player.loc[1] < len(grid)-1:
+                        if grid[player.loc[1]+1][player.loc[0]] == '0':
+                            player.loc[1] += 1
+                            endTurn = True
                 if event.key == pygame.K_d:
-                    if grid[player.loc[1]][player.loc[0]+1] == '0':
-                        player.loc[0] += 1
-                        endTurn = True
+                    if player.loc[0] < len(grid[player.loc[1]])-1:
+                        if grid[player.loc[1]][player.loc[0]+1] == '0':
+                            player.loc[0] += 1
+                            endTurn = True
 
                 # if event.key == pygame.K_p:
                 #     cArt = exampleArts.pierce
