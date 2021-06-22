@@ -1,4 +1,4 @@
-import sys, re
+import sys, re, webbrowser, os
 import pygame
 
 black = 0, 0, 0
@@ -54,13 +54,16 @@ def openingMenu(screenSize, screenSurface):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     if 200 <= event.pos[0] <= 800:
-                        if 300 <= event.pos[1] <= 400:
+                        if 100 <= event.pos[1] <= 200:
                             started = True
+                        if 300 <= event.pos[1] <= 400:
+                            webbrowser.open('file://' + os.path.realpath('Assets/help.html'))
                         if 500 <= event.pos[1] <= 600:
                             sys.exit()
                 
         openMenu.fill(white)
-        drawButton(openMenu, "New Game", menuFont, [200, 300], buttonSize, white, black)
+        drawButton(openMenu, "New Game", menuFont, [200, 100], buttonSize, white, black)
+        drawButton(openMenu, "Help", menuFont, [200, 300], buttonSize, white, black)
         drawButton(openMenu, "Quit", menuFont, [200, 500], buttonSize, white, black)
         screenSurface.blit(openMenu, [0,0])
         pygame.display.flip()
