@@ -14,7 +14,7 @@
     UHJK - Use combo in direction UP, LEFT, DOWN, RIGHT respectively<br>
     M - Open stat menu<br>
     N - Open combo Menu<br>
-    1-9 - Select combo 1-9 Note: Combos are displayed on the combo menu<br>
+    1-9 - Select combo 1-9 Note: Combos are displayed on the combo menu<br><br>
   </p>
   <h2>Menus</h2>
   <p>
@@ -24,11 +24,35 @@
     The pause menu has three options:<br>
     Resume - Continue playing and unpause<br>
     Combo Menu - Create new combos and edit existing ones<br>
-    Quit - Ends the game<br>
+    Quit - Ends the game<br><br>
   </p>
   <h2>Combo Menu</h2>
   <p>
     The Combo Menu displays 4 columns:<br>
+    Combos, Arts, Current Combo, Directions<br><br>
+    The Combos column displays all the combos the player has created. At the bottom is a new combo button that creates a new combo. When creating a combo, the player has to name it by typing the name and pressing enter. The name is not displayed while typing.<br><br>
+    The Arts column shows all the arts a player can use. It gets longer when more arts are learned. At the bottom, there are page buttons to change which page of arts is displayed. Clicking on one of the arts will add it to the currently selected combo.<br><br>
+    To the right of the Arts column is the current combo column. This column shows the combo name at the top followed by the arts said combo consists of below. The arts are listed in the order they are used. Clicking on the name of the combo will rename it. Like typing the name for the first time, the name will not be shown until after pressing enter. Clicking on any of the arts in this column will remove the art from this combo. At the bottom is a delete combo button which will delete the selected combo.<br><br>
+    Furthest to the right is the directions column. At the top of the directions column is a counter which displays how many points the combo costs vs the amount of points the player has. If the como cost points exceed the player points, the combo will not activate. Below is the directions to use each art. Pressing the direction will rotate it 90°.<br><br>
+  </p>
+  <h2>Combos and Arts</h2>
+  <p>
+    Combos and arts are the primary (and only way for the player) to attack in this game. A combo is a collection of arts that trigger them in sequence. Arts are the basic building blocks of combos and are used as basic attacks.<br><br>
+    An art has a few primary features:
+    <ul>
+      <li>Arts have a modifier that affects how it will interact with an enemy. These include increasing physical attack to lowering the enemy's defence.</li>
+      <li>Arts will move the enemies around.</li>
+      <li>Arts will move the player around.</li>
+      <li>Arts may hit multiple spaces.</li>
+    </ul>
+    For instance, the basic art Pierce:<br>
+    Attacks the one space in front, and moves the player and enemy one forwards.<br><br>
+    The basic art Broad Slash:<br>
+    Attacks three spaces in front and moves enemies to the right, but without moving the player<br>
+  </p>
+  <h2>Enemies</h2>
+  <p>
+    At the start of each level, 5 enemies will spawn.
   </p>
 </body>
 </html>
