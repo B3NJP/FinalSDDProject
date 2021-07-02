@@ -3,6 +3,7 @@ import pygame
 box = [100, 100]
 black = 0, 0, 0
 white = 255, 255, 255
+darkBlue = 0, 0, 150
 
 def draw(map, units, camera, screen):
     for i in range(0, len(map)):
@@ -12,7 +13,7 @@ def draw(map, units, camera, screen):
                     if map[i][j] == '0':
                         pygame.draw.rect(screen, black, [(j+camera[0])*100, (i+camera[1])*100]+box, 1) # Draws map lines
                     else:
-                        pygame.draw.rect(screen, black, [(j+camera[0])*100, (i+camera[1])*100]+box, 0) # Draws wall
+                        pygame.draw.rect(screen, darkBlue, [(j+camera[0])*100, (i+camera[1])*100]+box, 0) # Draws wall
 
     for i in units:
         if ((i.loc[1]+camera[1])*100 < screen.get_height() and (i.loc[1]+camera[1])*100 > -100): # If the spot is within the selected area
