@@ -1,4 +1,4 @@
-import math, random, sys, copy
+import math, random, sys, copy, time
 import pygame
 import classes, functions, exampleArts, drawMap, pygameFunctions, ai, MapGen2, exampleEnemies
 pygame.init()
@@ -333,7 +333,7 @@ while True:
                                 if comboMenuLoc[0]+200 <= event.pos[0] <= comboMenuLoc[0]+400:
                                     if comboMenuLoc[1]+100 <= event.pos[1] <= comboMenuLoc[1] + comboMenuSize[1] - 100:
                                         if 0 <= math.floor((event.pos[1] - comboMenuLoc[1]-100)/50) < len(knownArts[artPage*8:artPage*8+8]):
-                                            menuSelectedCombo.arts += [knownArts[math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]]
+                                            menuSelectedCombo.arts += [knownArts[artPage*8 + math.floor((event.pos[1] - comboMenuLoc[1]-100)/50)]]
                                             menuSelectedCombo.dirs += ['N']
                                         
                                 if comboMenuLoc[0]+400 <= event.pos[0] <= comboMenuLoc[0]+600: 
@@ -383,6 +383,8 @@ while True:
     drawMap.draw(grid, units, camera, screen)
     
     if endTurn:
+        pygame.display.flip()
+        time.sleep(0.2)
         endTurn = False
         toRemove = []
         for i in enemies:

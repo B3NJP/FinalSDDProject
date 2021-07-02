@@ -21,4 +21,6 @@ leftSlash = classes.Art('Left Slash', [['ATK', 1.1]], 'L', 'F', ['FL'], 20)
 
 pullSlash = classes.Art('Pull Slash', [['AGI', 0.5]], 'B', '', ['FF'], 20)
 
-allArts = [pierce, broadSlash, greatPierce, autumn, arcSlash, gale, runeBlade, pierceStep, leftSlash, pullSlash]
+step = classes.Art('Step', [], '', 'F', [], 10)
+
+allArts = [pierce, broadSlash, greatPierce, autumn, arcSlash, gale, runeBlade, pierceStep, leftSlash, pullSlash, step]
